@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         resolGp.setOnCheckedChangeListener { group, checkedId ->
             if(checkedId==R.id.chk_240) {
+                resolution = 240
                 var playerIntent = Intent(this, PlayerActivity::class.java)
                 playerIntent.putExtra("value", resolution)
                 btn_start.setOnClickListener{ startActivity(playerIntent) }
