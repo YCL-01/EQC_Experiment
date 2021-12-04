@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">expApp</string>
+    <string name="GuideTitle">[ How to start ]</string>
+    <string name="GuideText">1. Select the guided resolution\n\n2. Press the start button</string>
+    <string name="btn_start">START</string>
+    <string name="R_240p">240p</string>
+    <string name="R_480p">480p</string>
+    <string name="R_720p">720p</string>
+    <string name="R_1080p">1080p</string>
+</resources>
