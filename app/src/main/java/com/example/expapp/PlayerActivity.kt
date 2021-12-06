@@ -22,9 +22,10 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.Util
 import android.content.Intent
-
-
-
+import android.os.Environment
+import androidx.core.content.FileProvider
+import java.io.File
+import java.util.ArrayList
 
 
 class PlayerActivity : AppCompatActivity(){
@@ -39,11 +40,8 @@ class PlayerActivity : AppCompatActivity(){
     var GYRO_SENSOR_FILE_NAME: String = "Tears_$resVal"+"_gyro_"+"$gyroTimes.csv"
     var LIGHT_SENSOR_FILE_NAME: String = "Tears_$resVal"+"_light_"+"$lightTimes.csv"
 
-    //Sensor file directory
+    //Context
     private lateinit var context: Context
-    private lateinit var accelerometerFilePath: String
-    private lateinit var gyroFilePath: String
-    private lateinit var lightFilePath: String
 
     //Sensor Manager and Sensors
     private var sensorManager: SensorManager? = null
@@ -82,9 +80,6 @@ class PlayerActivity : AppCompatActivity(){
         Log.d("Log", "value: " + resVal)
 
         context = this;
-        accelerometerFilePath = context.filesDir.toString() + "/" + ACCELEROMETER_SENSOR_FILE_NAME
-        gyroFilePath = context.filesDir.toString() + "/" + GYRO_SENSOR_FILE_NAME
-        lightFilePath = context.filesDir.toString() + "/" + LIGHT_SENSOR_FILE_NAME
 
         //Initialize Sensor Manager
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
@@ -140,6 +135,55 @@ class PlayerActivity : AppCompatActivity(){
         playerView.player = null
 
         releasePlayer()
+        sendEmail()
+    }
+
+    fun sendEmail() {
+        val to = "example@gmail.com"
+        val subject = "Some Subject"
+        val message = "This is my message to you"
+
+        val attachments = ArrayList<Uri>()
+
+        val accelerometerFile =
+            File(Environment.getExternalStorageDirectory().absolutePath + "/" + ACCELEROMETER_SENSOR_FILE_NAME)
+        val accelerometerUri = FileProvider.getUriForFile(
+            context,
+            context.applicationContext.packageName + ".provider",
+            accelerometerFile
+        )
+
+        val gyroFile =
+            File(Environment.getExternalStorageDirectory().absolutePath + "/" + GYRO_SENSOR_FILE_NAME)
+        val gyroUri = FileProvider.getUriForFile(
+            context,
+            context.applicationContext.packageName + ".provider",
+            gyroFile
+        )
+
+        val lightFile =
+            File(Environment.getExternalStorageDirectory().absolutePath + "/" + LIGHT_SENSOR_FILE_NAME)
+        val lightUri = FileProvider.getUriForFile(
+            context,
+            context.applicationContext.packageName + ".provider",
+            lightFile
+        )
+
+        attachments.add(accelerometerUri)
+        attachments.add(gyroUri)
+        attachments.add(lightUri)
+
+        val email = Intent(Intent.ACTION_SEND_MULTIPLE)
+        email.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>(to))
+        email.putExtra(Intent.EXTRA_SUBJECT, subject)
+        email.putExtra(Intent.EXTRA_TEXT, message)
+        email.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments)
+        email.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        //need this to prompts email client only
+        email.type = "message/rfc822"
+
+        startActivity(Intent.createChooser(email, "Choose an Email client :"))
     }
 
     private fun releasePlayer() {

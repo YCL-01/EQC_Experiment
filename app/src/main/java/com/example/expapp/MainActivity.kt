@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity() {
                 btn_start.setOnClickListener{ startActivity(playerIntent) }
             }
         }
+
+
     }
 
     fun verifyStoragePermissions(activity: Activity?) {
