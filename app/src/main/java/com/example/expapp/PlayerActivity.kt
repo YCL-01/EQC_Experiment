@@ -135,7 +135,10 @@ class PlayerActivity : AppCompatActivity(){
         playerView.player = null
 
         releasePlayer()
-        sendEmail()
+        //sendEmail()
+
+        val goToSurvey = Intent(this, SurveyActivity::class.java)
+        startActivity(goToSurvey)
     }
 
     fun sendEmail() {

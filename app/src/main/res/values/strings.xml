@@ -7,4 +7,28 @@
     <string name="R_480p">480p</string>
     <string name="R_720p">720p</string>
     <string name="R_1080p">1080p</string>
+    <string name="SurveyTitle">Quick Survey</string>
+    <string name="Sex">Sex</string>
+    <string name="Male">Male</string>
+    <string name="Female">Female</string>
+    <string name="Age">Age</string>
+    <string name="VideoQualityRating">Video Quality Rating</string>
+    <string name="Send_Results_Button">Finish</string>
+    <string name="Survey_Info">Survey Explanation:
+    \n\n1) Please fill out your age, your sex, and how the video quality was on a scale from 1 to 5.
+    \n\n(1 being terrible quality and 5 being great quality)
+    \n\n2) Please click the Finish button and you are done </string>
+
+    <string-array name="ages">
+        <item>10–19</item>
+        <item>20–29</item>
+        <item>30–39</item>
+        <item>40–49</item>
+        <item>50–59</item>
+        <item>60–69</item>
+        <item>70–79</item>
+        <item>80–89</item>
+    </string-array>
+
+
 </resources>
