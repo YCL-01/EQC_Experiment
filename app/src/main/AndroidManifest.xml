@@ -19,16 +19,16 @@
         android:usesCleartextTraffic="true" >
         <activity
             android:name=".SurveyActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:exported="false" />
+
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".MainActivity" />
 
         <activity
             android:name=".PlayerActivity"
-            android:screenOrientation="landscape"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MainActivity"
             android:exported="true" >

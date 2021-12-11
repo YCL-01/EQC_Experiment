@@ -24,23 +24,21 @@ import com.google.android.exoplayer2.util.Util
 import android.content.Intent
 import android.os.Environment
 import androidx.core.content.FileProvider
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import java.io.File
 import java.util.ArrayList
 
 
 class PlayerActivity : AppCompatActivity(){
-    //Writing Frequency Counter
-    private var accelerometerTimes = 0
-    private var gyroTimes = 0
-    private var lightTimes = 0
+    //Resolution Value
     private var resVal = 0
 
+    //Participant
+    private var participant = 0
+
     //Sensor file names
-    var ACCELEROMETER_SENSOR_FILE_NAME: String = "Tears_$resVal"+"_accelerometer_"+"$accelerometerTimes.csv"
-    var GYRO_SENSOR_FILE_NAME: String = "Tears_$resVal"+"_gyro_"+"$gyroTimes.csv"
-    var LIGHT_SENSOR_FILE_NAME: String = "Tears_$resVal"+"_light_"+"$lightTimes.csv"
+    var ACCELEROMETER_SENSOR_FILE_NAME: String= "Tears_$resVal"+"_accelerometer_"+"$participant.csv"
+    var GYRO_SENSOR_FILE_NAME: String= "Tears_$resVal"+"_gyro_"+"$participant.csv"
+    var LIGHT_SENSOR_FILE_NAME: String= "Tears_$resVal"+"_light_"+"$participant.csv"
 
     //Context
     private lateinit var context: Context
@@ -83,6 +81,11 @@ class PlayerActivity : AppCompatActivity(){
 
         context = this;
 
+        //Initialize file names
+        ACCELEROMETER_SENSOR_FILE_NAME  = "Tears_$resVal"+"_accelerometer_"+"$participant.csv"
+        GYRO_SENSOR_FILE_NAME = "Tears_$resVal"+"_gyro_"+"$participant.csv"
+        LIGHT_SENSOR_FILE_NAME = "Tears_$resVal"+"_light_"+"$participant.csv"
+
         //Initialize Sensor Manager
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
@@ -99,7 +102,6 @@ class PlayerActivity : AppCompatActivity(){
     override fun onStart() {
         super.onStart()
         hasStartedWriting = true
-        setCounter()
         Log.d("Listener Registered", "Listeners registered")
         sensorManager!!.registerListener(accelerometerListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
         sensorManager!!.registerListener(gyroscopeListener,gyroscope,SensorManager.SENSOR_DELAY_NORMAL)
@@ -107,17 +109,9 @@ class PlayerActivity : AppCompatActivity(){
         initPlayer()
     }
 
-    fun setCounter(){
-        accelerometerTimes++
-        gyroTimes++
-        lightTimes++
-    }
-
     override fun onResume() {
         super.onResume()
         hasStartedWriting=true
-        setCounter()
-
     }
 
     override fun onPause() {
@@ -137,58 +131,10 @@ class PlayerActivity : AppCompatActivity(){
         playerView.player = null
 
         releasePlayer()
-        //sendEmail()
 
         val goToSurvey = Intent(this, SurveyActivity::class.java)
+        goToSurvey.putExtra("resVal", resVal)
         startActivity(goToSurvey)
-    }
-
-    fun sendEmail() {
-        val to = "example@gmail.com"
-        val subject = "Some Subject"
-        val message = "This is my message to you"
-
-        val attachments = ArrayList<Uri>()
-
-        val accelerometerFile =
-            File(Environment.getExternalStorageDirectory().absolutePath + "/" + ACCELEROMETER_SENSOR_FILE_NAME)
-        val accelerometerUri = FileProvider.getUriForFile(
-            context,
-            context.applicationContext.packageName + ".provider",
-            accelerometerFile
-        )
-
-        val gyroFile =
-            File(Environment.getExternalStorageDirectory().absolutePath + "/" + GYRO_SENSOR_FILE_NAME)
-        val gyroUri = FileProvider.getUriForFile(
-            context,
-            context.applicationContext.packageName + ".provider",
-            gyroFile
-        )
-
-        val lightFile =
-            File(Environment.getExternalStorageDirectory().absolutePath + "/" + LIGHT_SENSOR_FILE_NAME)
-        val lightUri = FileProvider.getUriForFile(
-            context,
-            context.applicationContext.packageName + ".provider",
-            lightFile
-        )
-
-        attachments.add(accelerometerUri)
-        attachments.add(gyroUri)
-        attachments.add(lightUri)
-
-        val email = Intent(Intent.ACTION_SEND_MULTIPLE)
-        email.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>(to))
-        email.putExtra(Intent.EXTRA_SUBJECT, subject)
-        email.putExtra(Intent.EXTRA_TEXT, message)
-        email.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments)
-        email.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-        //need this to prompts email client only
-        email.type = "message/rfc822"
-
-        startActivity(Intent.createChooser(email, "Choose an Email client :"))
     }
 
     private fun releasePlayer() {
