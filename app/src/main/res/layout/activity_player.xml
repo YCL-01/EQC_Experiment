@@ -12,7 +12,8 @@
         android:background="@color/black"
         app:auto_show="true"
         app:surface_type="surface_view"
-        app:use_controller="true"/>
+        app:use_controller="true"
+        app:resize_mode="fit"/>
     <!--app:controller_layout_id="@layout/custom_exo_view"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

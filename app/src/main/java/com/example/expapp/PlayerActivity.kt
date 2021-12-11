@@ -24,6 +24,8 @@ import com.google.android.exoplayer2.util.Util
 import android.content.Intent
 import android.os.Environment
 import androidx.core.content.FileProvider
+import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import java.io.File
 import java.util.ArrayList
 
@@ -221,6 +223,7 @@ class PlayerActivity : AppCompatActivity(){
             it.prepare(mediaSource, false, false)
         }
         playerView.player = player
+
     }
 
     private fun buildMediaSource(dashURL: String): MediaSource {
