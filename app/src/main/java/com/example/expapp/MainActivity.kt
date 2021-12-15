@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.app.Activity
+import java.util.Random
 
 
 
@@ -32,7 +33,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         verifyStoragePermissions(this)
-
+        //OPTION 1
+        /*
         resolGp.setOnCheckedChangeListener { group, checkedId ->
             if(checkedId==R.id.chk_240) {
                 resolution = 240
@@ -56,8 +58,15 @@ class MainActivity : AppCompatActivity() {
                 btn_start.setOnClickListener{ startActivity(playerIntent) }
             }
         }
-
-
+        */
+        //OPTION 2
+        val res_candidate = listOf(240, 480, 720, 1080)
+        val random = Random()
+        val num = random.nextInt(3)
+        resolution = res_candidate[num]
+        var playerIntent = Intent(this, PlayerActivity::class.java)
+        playerIntent.putExtra("value", resolution)
+        btn_start.setOnClickListener{ startActivity(playerIntent) }
     }
 
     fun verifyStoragePermissions(activity: Activity?) {
