@@ -95,9 +95,10 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     fun sendEmail(message:String) {
-        val to = "ywckok@gmail.com"
-        val subject = "SR Resolution Test"
-        var message = message
+        val to = "youngchan.lim@stonybrook.edu "
+        val subject = "SUNY Test"
+        val message = message
+
 
         val attachments = ArrayList<Uri>()
 

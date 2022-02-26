@@ -86,6 +86,10 @@ class PlayerActivity : AppCompatActivity(){
         GYRO_SENSOR_FILE_NAME = "Tears_$resVal"+"_gyro_"+"$participant.csv"
         LIGHT_SENSOR_FILE_NAME = "Tears_$resVal"+"_light_"+"$participant.csv"
 
+        println(ACCELEROMETER_SENSOR_FILE_NAME)
+        println(GYRO_SENSOR_FILE_NAME)
+        println(LIGHT_SENSOR_FILE_NAME)
+
         //Initialize Sensor Manager
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
