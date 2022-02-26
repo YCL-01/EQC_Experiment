@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         verifyStoragePermissions(this)
         //OPTION 1
-        /*
+
         resolGp.setOnCheckedChangeListener { group, checkedId ->
             if(checkedId==R.id.chk_240) {
                 resolution = 240
@@ -58,8 +58,9 @@ class MainActivity : AppCompatActivity() {
                 btn_start.setOnClickListener{ startActivity(playerIntent) }
             }
         }
-        */
+
         //OPTION 2
+        /*
         val res_candidate = listOf(240, 480, 720, 1080)
         val random = Random()
         val num = random.nextInt(3)
@@ -67,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         var playerIntent = Intent(this, PlayerActivity::class.java)
         playerIntent.putExtra("value", resolution)
         btn_start.setOnClickListener{ startActivity(playerIntent) }
+         */
     }
 
     fun verifyStoragePermissions(activity: Activity?) {
