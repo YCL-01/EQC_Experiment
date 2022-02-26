@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">expApp</string>
     <string name="GuideTitle">[ How to start ]</string>
-    <string name="GuideText">1. Select the guided resolution\n\n2. Press the start button</string>
+    <!-- Option 1
+     <string name="GuideText">1. Select the guided resolution\n\n2. Press the start button</string> -->
+    <!-- Option 2 -->
+    <string name="GuideText">1. Press the start button\n\n2. Watch the video\n\n3. Finish the Quick survey that comes up after the Video</string>
     <string name="btn_start">START</string>
     <string name="R_240p">240p</string>
     <string name="R_480p">480p</string>
