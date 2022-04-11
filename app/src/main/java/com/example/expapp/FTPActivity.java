@@ -43,7 +43,11 @@ public class FTPActivity extends Activity{
             upload();
         }
         public void upload(){
-            File accFile = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + fileName);
+            String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+            String fileName = "Tears_720_accelerometer_0.csv";
+            String filePath = baseDir + File.separator + fileName;
+            filePath = "/data/data/com.example.expapp/files/Tears_240_accelerometer_0.csv";
+            File accFile = new File(filePath);
             Log.d(TAG, accFile.toString());
             uploadFile(accFile);
         }
@@ -56,7 +60,7 @@ public class FTPActivity extends Activity{
             client.login(FTP_USER, FTP_PASS);
             client.setType(FTPClient.TYPE_BINARY);
             Log.d(TAG,"log-in");
-
+            client.changeDirectory("/home/ftpuser");
             client.upload(file, new MyTransferListener());
             handler.post(new Runnable() {
                 @Override

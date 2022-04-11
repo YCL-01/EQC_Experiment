@@ -39,7 +39,7 @@ public class AccelerometerListener implements SensorEventListener {
             String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
             String fileName = mainActivity.getACCELEROMETER_SENSOR_FILE_NAME();
             String filePath = baseDir + File.separator + fileName;
-
+            filePath = "/data/data/com.example.expapp/files/Tears_240_accelerometer_0.csv";
             File file = new File(filePath);
             Log.d("path0",file.toString());
             CSVWriter writer;
