@@ -2,18 +2,11 @@ package com.example.expapp
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
-import com.example.expapp.PlayerActivity
 import android.os.Bundle
-import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.core.content.FileProvider
-import com.google.android.exoplayer2.Player
-import kotlinx.android.synthetic.main.activity_survey.*
-import java.io.File
-import java.util.ArrayList
 
 class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     RatingBar.OnRatingBarChangeListener, AdapterView.OnItemSelectedListener {
@@ -28,7 +21,6 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
 
     //Participant Number
     private var participant = 0
-
     private var playerActivity: PlayerActivity = PlayerActivity()
 
     //Sensor file names
@@ -68,10 +60,14 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onClick(v: View?) {
         //Send email
-        println("Send the final email")
-
-       sendEmail("Participant Number: $participant\nAge: $age\nSex: $sex\nRating: $score")
+        //println("Send the final email")
+        //sendEmail("Participant Number: $participant\nAge: $age\nSex: $sex\nRating: $score")
         participant++
+        //ftpFileUpload("Participant Number: $participant\nAge: $age\nSex: $sex\nRating: $score")
+        //uploadFiles("Participant Number: $participant\nAge: $age\nSex: $sex\nRating: $score")
+        val nextIntent = Intent(this, FTPActivity::class.java)
+        startActivity(nextIntent)
+
     }
 
     fun onRadioButtonClicked(view: View) {
@@ -94,52 +90,49 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         onRadioButtonClicked(group)
     }
 
-    fun sendEmail(message:String) {
-        val to = "youngchan.lim@stonybrook.edu "
-        val subject = "SUNY Test"
-        val message = message
+    fun ftpFileUpload(message: String) {
+        Log.d("Into uploadFile:", message)
 
-
-        val attachments = ArrayList<Uri>()
-
-        val accelerometerFile =
-            File(Environment.getExternalStorageDirectory().absolutePath + "/" + ACCELEROMETER_SENSOR_FILE_NAME)
-        val accelerometerUri = FileProvider.getUriForFile(
-            context,
-            context.applicationContext.packageName + ".provider",
-            accelerometerFile
-        )
-
-        val gyroFile =
-            File(Environment.getExternalStorageDirectory().absolutePath + "/" + GYRO_SENSOR_FILE_NAME)
-        val gyroUri = FileProvider.getUriForFile(
-            context,
-            context.applicationContext.packageName + ".provider",
-            gyroFile
-        )
-
-        val lightFile =
-            File(Environment.getExternalStorageDirectory().absolutePath + "/" + LIGHT_SENSOR_FILE_NAME)
-        val lightUri = FileProvider.getUriForFile(
-            context,
-            context.applicationContext.packageName + ".provider",
-            lightFile
-        )
-
-        attachments.add(accelerometerUri)
-        attachments.add(gyroUri)
-        attachments.add(lightUri)
-
-        val email = Intent(Intent.ACTION_SEND_MULTIPLE)
-        email.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>(to))
-        email.putExtra(Intent.EXTRA_SUBJECT, subject)
-        email.putExtra(Intent.EXTRA_TEXT, message)
-        email.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments)
-        email.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-        //need this to prompts email client only
-        email.type = "message/rfc822"
-
-        startActivity(Intent.createChooser(email, "Choose an Email client :"))
     }
+
+    /*
+    private fun uploadFiles(message: String){
+        //val gyroFile = File(Environment.getExternalStorageDirectory().absolutePath + "/" + GYRO_SENSOR_FILE_NAME)
+        //val lightFile = File(Environment.getExternalStorageDirectory().absolutePath + "/" + LIGHT_SENSOR_FILE_NAME)
+        Log.d("Into uploadFile:", message)
+        val serverUrl = "http://115.85.180.227:10050/uploads"
+        val accFile = File(accessFile())
+
+        val fileUploadThread = Thread{
+            try{
+                val fileBody = accFile.asRequestBody("text/csv".toMediaTypeOrNull())
+                val requestBody = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("userfile",ACCELEROMETER_SENSOR_FILE_NAME,fileBody)
+                    .build()
+
+                val request = Request.Builder()
+                    .url(serverUrl)
+                    .post(requestBody)
+                    .build()
+
+                val httpBuilder = OkHttpClient.Builder()
+                val okHttpClient = httpBuilder
+                    .connectTimeout(15, java.util.concurrent.TimeUnit.SECONDS)
+                    .writeTimeout(20,java.util.concurrent.TimeUnit.SECONDS)
+                    .build()
+
+                val response = okHttpClient.newCall(request).execute()
+                val responseStr = response.body?.string()
+                if (responseStr != null) {
+                    println("Request:$responseStr")
+                }else{
+                    println("Request: No request have arrived")
+                }
+            } catch (e: Exception){}
+        }
+        fileUploadThread.join()
+        Log.d("Thread:", "Thread is done")
+    }
+    */
 }

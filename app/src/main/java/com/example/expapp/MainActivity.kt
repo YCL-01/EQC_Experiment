@@ -32,7 +32,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        verifyStoragePermissions(this)
+        verifyWriteStoragePermissions(this)
+        verifyReadStoragePermissions(this)
+
         //OPTION 1
 
         resolGp.setOnCheckedChangeListener { group, checkedId ->
@@ -71,11 +73,25 @@ class MainActivity : AppCompatActivity() {
          */
     }
 
-    fun verifyStoragePermissions(activity: Activity?) {
+    fun verifyWriteStoragePermissions(activity: Activity?) {
         // Check if we have write permission
         val permission = ActivityCompat.checkSelfPermission(
             activity!!,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(activity,
+                PERMISSIONS_STORAGE,
+                REQUEST_EXTERNAL_STORAGE
+            )
+        }
+    }
+    fun verifyReadStoragePermissions(activity: Activity?) {
+        // Check if we have write permission
+        val permission = ActivityCompat.checkSelfPermission(
+            activity!!,
+            Manifest.permission.READ_EXTERNAL_STORAGE
         )
         if (permission != PackageManager.PERMISSION_GRANTED) {
             // We don't have permission so prompt the user

@@ -29,14 +29,14 @@ public class LightSensorListener implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent)  {
-        Log.d(TAG, "light sensor change:"+sensorEvent.values[0]);
+        //Log.d(TAG, "light sensor change:"+sensorEvent.values[0]);
         if(mainActivity.isHasStartedWriting())
         {
             //Context context = mainActivity;
             String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
             String fileName = mainActivity.getLIGHT_SENSOR_FILE_NAME();
             String filePath = baseDir + File.separator + fileName;
-            Log.d("File path",filePath);
+            //Log.d("File path",filePath);
 
             File file = new File(filePath);
             CSVWriter writer;
@@ -56,14 +56,14 @@ public class LightSensorListener implements SensorEventListener {
                 float[] sensorValues = (sensorEvent.values);
                 String[] data=new String[sensorValues.length+1];
                 SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z");
-                jdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
+                jdf.setTimeZone(TimeZone.getTimeZone("GMT+9"));
                 data[0] = jdf.format(new Date(System.currentTimeMillis()));
                 for(int i=0;i<sensorValues.length;i++)
                 {
                     data[i+1]=String.valueOf(sensorValues[i]);
                 }
                 writer.writeNext(data);
-                Log.d(TAG,"Writing data to "+mainActivity.getLIGHT_SENSOR_FILE_NAME());
+                //Log.d(TAG,"Writing data to "+mainActivity.getLIGHT_SENSOR_FILE_NAME());
 
                 writer.close();
             } catch (IOException e) {

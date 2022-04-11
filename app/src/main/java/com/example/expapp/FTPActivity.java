@@ -1,16 +1,10 @@
-package com.example.expapp.fileUpload;
+package com.example.expapp;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -24,14 +18,15 @@ import it.sauronsoftware.ftp4j.FTPDataTransferListener;
 import com.example.expapp.PlayerActivity;
 import com.example.expapp.R;
 
-public class ConnectFTP extends Activity{
+public class FTPActivity extends Activity{
 
     static final String FTP_HOST= "115.85.180.227";
     static final String FTP_USER = "ftpuser";
     static final String FTP_PASS  ="ftpuser";
+    String TAG="FTPLog";
+    String fileName = "Tears_720_accelerometer_0.csv";
 
     Handler handler = new Handler();
-    PlayerActivity mainActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,30 +43,32 @@ public class ConnectFTP extends Activity{
             upload();
         }
         public void upload(){
-            File accFile = new File(android.os.Environment.getExternalStorageDirectory() + mainActivity.getACCELEROMETER_SENSOR_FILE_NAME());
+            File accFile = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + fileName);
+            Log.d(TAG, accFile.toString());
             uploadFile(accFile);
         }
     }
 
-    public void uploadFile(File fileName){
+    public void uploadFile(File file){
         FTPClient client = new FTPClient();
         try {
             client.connect(FTP_HOST,21);
             client.login(FTP_USER, FTP_PASS);
             client.setType(FTPClient.TYPE_BINARY);
+            Log.d(TAG,"log-in");
 
-            client.upload(fileName, new MyTransferListener());//업로드 시작
+            client.upload(file, new MyTransferListener());
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println(" Success");
+                    Log.d(TAG," Success");
                 }
             });
         } catch (Exception e) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println(" Failed");
+                    Log.d(TAG," Failed");
                 }
             });
             e.printStackTrace();
@@ -85,16 +82,13 @@ public class ConnectFTP extends Activity{
     }
 
     /*******  Used to file upload and show progress  **********/
-
     public class MyTransferListener implements FTPDataTransferListener {
 
         public void started() {
-
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    //Toast.makeText(getBaseContext(), " Upload Started ...", Toast.LENGTH_SHORT).show();
-                    System.out.println(" Upload Started ...");
+                    Log.d(TAG," Upload Started ...");
                 }
             });
         }
@@ -107,7 +101,7 @@ public class ConnectFTP extends Activity{
                     // Yet other length bytes has been transferred since the last time this
                     // method was called
                     //Toast.makeText(getBaseContext(), " transferred ...", Toast.LENGTH_SHORT).show();
-                    System.out.println(" transferred ..." + length);
+                    Log.d(TAG," transferred ..." + length);
                 }
             });
         }
@@ -117,7 +111,7 @@ public class ConnectFTP extends Activity{
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println(" completed ..." );
+                    Log.d(TAG," completed ..." );
                 }
             });
         }
@@ -127,7 +121,7 @@ public class ConnectFTP extends Activity{
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println(" aborted ..." );
+                    Log.d(TAG," aborted ..." );
                 }
             });
         }
@@ -137,7 +131,7 @@ public class ConnectFTP extends Activity{
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println(" failed ..." );
+                    Log.d(TAG," failed ..." );
                 }
             });
         }

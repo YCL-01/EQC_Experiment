@@ -18,13 +18,14 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true" >
         <activity
+            android:name=".FTPActivity"
+            android:exported="false" />
+        <activity
             android:name=".SurveyActivity"
             android:exported="false" />
-
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".MainActivity" />
-
         <activity
             android:name=".PlayerActivity"
             android:exported="false"
