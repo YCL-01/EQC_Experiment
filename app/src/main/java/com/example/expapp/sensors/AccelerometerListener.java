@@ -38,6 +38,7 @@ public class AccelerometerListener implements SensorEventListener {
         {
             //Context context = mainActivity;
             //String baseDir = mainActivity.getExternalFilesDir(null).toString();
+<<<<<<< Updated upstream
             //External Storage (SDKversion < 29)
             //String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
             //String fileName = mainActivity.getACCELEROMETER_SENSOR_FILE_NAME();
@@ -47,6 +48,12 @@ public class AccelerometerListener implements SensorEventListener {
             String baseDir = "/data/user/0/com.example.expapp/files/";
             String fileName = mainActivity.getACCELEROMETER_SENSOR_FILE_NAME();
             String filePath = baseDir + File.separator + fileName;
+=======
+            String baseDir = "/data/data/com.example.expapp/files";
+            String fileName = mainActivity.getACCELEROMETER_SENSOR_FILE_NAME();
+            String filePath = baseDir + File.separator + fileName;
+
+>>>>>>> Stashed changes
             File file = new File(filePath);
             Log.d("path0",file.toString());
             CSVWriter writer;
@@ -77,6 +84,7 @@ public class AccelerometerListener implements SensorEventListener {
             writer.writeNext(data);
 
                 writer.close();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
