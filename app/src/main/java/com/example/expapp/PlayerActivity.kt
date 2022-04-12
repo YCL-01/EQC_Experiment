@@ -24,6 +24,7 @@ import com.google.android.exoplayer2.util.Util
 import android.content.Intent
 import android.os.Environment
 import androidx.core.content.FileProvider
+import com.google.android.exoplayer2.Player
 import java.io.File
 import java.util.ArrayList
 
@@ -101,6 +102,10 @@ class PlayerActivity : AppCompatActivity(){
         gyroscopeListener = GyroscopeListener(this)
         lightSensorListener = LightSensorListener(this)
 
+
+
+
+
     }
 
     override fun onStart() {
@@ -111,6 +116,16 @@ class PlayerActivity : AppCompatActivity(){
         sensorManager!!.registerListener(gyroscopeListener,gyroscope,SensorManager.SENSOR_DELAY_NORMAL)
         sensorManager!!.registerListener(lightSensorListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
         initPlayer()
+        val eventListener : Player.Listener
+        var videoIndex = 0
+        eventListener = object: Player.Listener {
+            override fun onPlayerStateChanged(playWhenReady: Boolean, playBackState: Int) {
+                if (playBackState == Player.STATE_ENDED) {
+                    onStop()
+                }
+            }
+        }
+        player?.addListener(eventListener)
     }
 
     override fun onResume() {
@@ -124,7 +139,9 @@ class PlayerActivity : AppCompatActivity(){
         sensorManager!!.unregisterListener(accelerometerListener)
     }
 
+
     override fun onStop() {
+
         super.onStop()
         hasStartedWriting= false
 
@@ -133,7 +150,7 @@ class PlayerActivity : AppCompatActivity(){
         sensorManager!!.unregisterListener(gyroscopeListener)
         sensorManager!!.unregisterListener(lightSensorListener)
         playerView.player = null
-
+        player?.playWhenReady = false
         releasePlayer()
 
         val goToSurvey = Intent(this, SurveyActivity::class.java)
@@ -173,6 +190,7 @@ class PlayerActivity : AppCompatActivity(){
             it.prepare(mediaSource, false, false)
         }
         playerView.player = player
+
 
     }
 
