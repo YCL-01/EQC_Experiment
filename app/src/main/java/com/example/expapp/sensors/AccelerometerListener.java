@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import java.lang.Object.*;
+
 public class AccelerometerListener implements SensorEventListener {
 
     String TAG="accelerometerLog";
@@ -42,11 +44,10 @@ public class AccelerometerListener implements SensorEventListener {
             //String filePath = baseDir + File.separator + fileName;
             //filePath = "/data/data/com.example.expapp/files/Tears_240_accelerometer_0.csv";
             // Internal Storage (SDKVersion >= 29)
-            String baseDir = getFilesDir();
+            String baseDir = "/data/user/0/com.example.expapp/files/";
             String fileName = mainActivity.getACCELEROMETER_SENSOR_FILE_NAME();
             String filePath = baseDir + File.separator + fileName;
-            //File file = new File(filePath);
-            File file = new File(getFilesDir(), filename);
+            File file = new File(filePath);
             Log.d("path0",file.toString());
             CSVWriter writer;
             FileWriter mFileWriter;

@@ -10,17 +10,19 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import it.sauronsoftware.ftp4j.FTPClient;
 import it.sauronsoftware.ftp4j.FTPDataTransferListener;
-import com.example.expapp.PlayerActivity;
+import com.example.expapp.SurveyActivity;
 import com.example.expapp.R;
+
 
 public class FTPActivity extends Activity{
 
-    PlayerActivity mainActivity;
+    SurveyActivity mainActivity;
 
     static final String FTP_HOST= "115.85.180.227";
     static final String FTP_USER = "ftpuser";
@@ -53,8 +55,16 @@ public class FTPActivity extends Activity{
             File accFile = new File(filePath);
             */
 
-            String fileName = mainActivity.getACCELEROMETER_SENSOR_FILE_NAME();
-            File accFile = new File(getFilesDir(), filename);
+            String fileName = "Tears_240_accelerometer_0.csv";
+            File accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
+            Log.d(TAG, accFile.toString());
+            uploadFile(accFile);
+            fileName = "Tears_240_gyro_0.csv";
+            accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
+            Log.d(TAG, accFile.toString());
+            uploadFile(accFile);
+            fileName = "Tears_240_light_0.csv";
+            accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
             Log.d(TAG, accFile.toString());
             uploadFile(accFile);
         }
@@ -66,6 +76,7 @@ public class FTPActivity extends Activity{
             client.connect(FTP_HOST,21);
             client.login(FTP_USER, FTP_PASS);
             client.setType(FTPClient.TYPE_BINARY);
+            client.setPassive(true);
             Log.d(TAG,"log-in");
             client.changeDirectory("/home/ftpuser");
             client.upload(file, new MyTransferListener());
