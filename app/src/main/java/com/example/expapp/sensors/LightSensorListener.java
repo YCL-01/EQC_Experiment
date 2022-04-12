@@ -19,7 +19,6 @@ import java.util.TimeZone;
 public class LightSensorListener implements SensorEventListener {
 
     String TAG="lightsensorLog";
-
     PlayerActivity mainActivity;
 
     public LightSensorListener(PlayerActivity mainActivity)
@@ -32,11 +31,10 @@ public class LightSensorListener implements SensorEventListener {
         //Log.d(TAG, "light sensor change:"+sensorEvent.values[0]);
         if(mainActivity.isHasStartedWriting())
         {
-            //Context context = mainActivity;
-            String baseDir = "/data/user/0/com.example.expapp/files/";
+            String baseDir = "/data/data/com.example.expapp/files";
             String fileName = mainActivity.getLIGHT_SENSOR_FILE_NAME();
             String filePath = baseDir + File.separator + fileName;
-            //Log.d("File path",filePath);
+            Log.d(TAG,filePath.toString());
 
             File file = new File(filePath);
             CSVWriter writer;
@@ -71,7 +69,6 @@ public class LightSensorListener implements SensorEventListener {
             }
         }
     }
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 

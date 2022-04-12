@@ -37,9 +37,9 @@ class PlayerActivity : AppCompatActivity(){
     private var participant = 0
 
     //Sensor file names
-    var ACCELEROMETER_SENSOR_FILE_NAME: String= "Tears_$resVal"+"_accelerometer_"+"$participant.csv"
-    var GYRO_SENSOR_FILE_NAME: String= "Tears_$resVal"+"_gyro_"+"$participant.csv"
-    var LIGHT_SENSOR_FILE_NAME: String= "Tears_$resVal"+"_light_"+"$participant.csv"
+    var ACCELEROMETER_SENSOR_FILE_NAME: String= "acc.csv"
+    var GYRO_SENSOR_FILE_NAME: String= "gyro.csv"
+    var LIGHT_SENSOR_FILE_NAME: String= "light.csv"
 
     //Context
     private lateinit var context: Context
@@ -83,13 +83,9 @@ class PlayerActivity : AppCompatActivity(){
         context = this;
 
         //Initialize file names
-        ACCELEROMETER_SENSOR_FILE_NAME  = "Tears_$resVal"+"_accelerometer_"+"$participant.csv"
-        GYRO_SENSOR_FILE_NAME = "Tears_$resVal"+"_gyro_"+"$participant.csv"
-        LIGHT_SENSOR_FILE_NAME = "Tears_$resVal"+"_light_"+"$participant.csv"
-
-        println(ACCELEROMETER_SENSOR_FILE_NAME)
-        println(GYRO_SENSOR_FILE_NAME)
-        println(LIGHT_SENSOR_FILE_NAME)
+        ACCELEROMETER_SENSOR_FILE_NAME  = "acc.csv"
+        GYRO_SENSOR_FILE_NAME = "gyro.csv"
+        LIGHT_SENSOR_FILE_NAME = "light.csv"
 
         //Initialize Sensor Manager
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
@@ -101,10 +97,6 @@ class PlayerActivity : AppCompatActivity(){
         accelerometerListener = AccelerometerListener(this)
         gyroscopeListener = GyroscopeListener(this)
         lightSensorListener = LightSensorListener(this)
-
-
-
-
 
     }
 
@@ -137,11 +129,12 @@ class PlayerActivity : AppCompatActivity(){
         super.onPause()
         hasStartedWriting = false;
         sensorManager!!.unregisterListener(accelerometerListener)
+        sensorManager!!.unregisterListener(gyroscopeListener)
+        sensorManager!!.unregisterListener(lightSensorListener)
     }
 
 
     override fun onStop() {
-
         super.onStop()
         hasStartedWriting= false
 
@@ -149,12 +142,13 @@ class PlayerActivity : AppCompatActivity(){
         sensorManager!!.unregisterListener(accelerometerListener)
         sensorManager!!.unregisterListener(gyroscopeListener)
         sensorManager!!.unregisterListener(lightSensorListener)
+
         playerView.player = null
         player?.playWhenReady = false
         releasePlayer()
 
         val goToSurvey = Intent(this, SurveyActivity::class.java)
-        goToSurvey.putExtra("resVal", resVal)
+        goToSurvey.putExtra("value", resVal)
         startActivity(goToSurvey)
     }
 

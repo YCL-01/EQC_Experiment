@@ -28,12 +28,17 @@ import java.util.Random;
 public class FTPActivity extends Activity{
 
     SurveyActivity mainActivity;
+    PlayerActivity PlayerActivity;
 
     static final String FTP_HOST= "115.85.180.227";
     static final String FTP_USER = "ftpuser";
     static final String FTP_PASS  ="ftpuser";
     String TAG="FTPLog";
-    String fileName = "Tears_720_accelerometer_0.csv";
+    String accFileName = "acc.csv";
+    String gyroFileName = "gyro.csv";
+    String lightFileName = "light.csv";
+    String surveyFileName = "surveyData.txt";
+
 
     Handler handler = new Handler();
 
@@ -42,15 +47,6 @@ public class FTPActivity extends Activity{
         super.onCreate(savedInstanceState);
         NThread nThread = new NThread();
         nThread.start();
-        while (true){
-            Thread.State state = nThread.getState();
-            if(state == Thread.State.TERMINATED){
-                break;
-            }
-        }
-        ActivityCompat.finishAffinity(this);
-        System.exit(0);
-
     }
 
     class NThread extends Thread{
@@ -68,7 +64,6 @@ public class FTPActivity extends Activity{
                 e.printStackTrace();
             }
         }
-
         public void upload() throws FTPIllegalReplyException, IOException, FTPException {
 
             int tmp = (int)(Math.random()*2100000000);
@@ -85,22 +80,23 @@ public class FTPActivity extends Activity{
             client.createDirectory(dirName);
             dirName = "/home/ftpuser/"+dirName;
             client.changeDirectory(dirName);
-            String fileName = "Tears_240_accelerometer_0.csv";
-            File accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
+
+            //File accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
+            File accFile = new File("/data/data/com.example.expapp/files/", accFileName);
             Log.d(TAG, accFile.toString());
             uploadFile(client, accFile, dirName);
-            fileName = "Tears_240_gyro_0.csv";
-            accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
-            Log.d(TAG, accFile.toString());
-            uploadFile(client, accFile, dirName);
-            fileName = "Tears_240_light_0.csv";
-            accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
-            Log.d(TAG, accFile.toString());
-            uploadFile(client, accFile, dirName);
-            fileName = "SurveyData.txt";
-            accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
-            Log.d(TAG, accFile.toString());
-            uploadFile(client, accFile, dirName);
+
+            File gyroFile = new File("/data/data/com.example.expapp/files/", gyroFileName);
+            Log.d(TAG, gyroFile.toString());
+            uploadFile(client, gyroFile, dirName);
+
+            File lightFile = new File("/data/data/com.example.expapp/files/", lightFileName);
+            Log.d(TAG, lightFile.toString());
+            uploadFile(client, lightFile, dirName);
+
+            File surveyFile = new File("/data/user/0/com.example.expapp/files/", surveyFileName);
+            Log.d(TAG, surveyFile.toString());
+            uploadFile(client, surveyFile, dirName);
         }
     }
 

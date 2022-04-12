@@ -1,6 +1,5 @@
 package com.example.expapp.sensors;
 
-import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -32,11 +31,10 @@ public class GyroscopeListener implements SensorEventListener {
         //Log.d(TAG, "gyroscope rotation: X:"+sensorEvent.values[0]+"  Y:"+sensorEvent.values[1]+"Z:  "+sensorEvent.values[2]);
         if(mainActivity.isHasStartedWriting())
         {
-            //Context context = mainActivity;
-            String baseDir = "/data/user/0/com.example.expapp/files/";
+            String baseDir = "/data/data/com.example.expapp/files";
             String fileName = mainActivity.getGYRO_SENSOR_FILE_NAME();
             String filePath = baseDir + File.separator + fileName;
-            //Log.d("File path",filePath);
+            Log.d(TAG,filePath.toString());
 
             File file = new File(filePath);
             CSVWriter writer;
@@ -65,7 +63,6 @@ public class GyroscopeListener implements SensorEventListener {
                 }
                 writer.writeNext(data);
                 //Log.d(TAG,"Writing data to "+mainActivity.getGYRO_SENSOR_FILE_NAME());
-
 
                 writer.close();
             } catch (IOException e) {

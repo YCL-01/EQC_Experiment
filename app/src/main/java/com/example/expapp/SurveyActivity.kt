@@ -16,6 +16,7 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     private var age: String? = null
     private var sex: String? = null
     private var score = 0.0
+    private var resVal = 0
 
     //Context
     private lateinit var context: Context
@@ -34,6 +35,11 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         setContentView(R.layout.activity_survey)
 
         context = this;
+        resVal = intent.getIntExtra("value", 720)
+
+        Log.d("Survey------:",ACCELEROMETER_SENSOR_FILE_NAME.toString())
+        Log.d("Survey------:",GYRO_SENSOR_FILE_NAME.toString())
+        Log.d("Survey------:",LIGHT_SENSOR_FILE_NAME.toString())
 
         //Select Age
         val spinner = findViewById<View>(R.id.spinner) as Spinner
@@ -60,21 +66,14 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onClick(v: View?) {
-        //Send email
-        //println("Send the final email")
-        //sendEmail("Participant Number: $participant\nAge: $age\nSex: $sex\nRating: $score")
-        participant++
-        //ftpFileUpload("Participant Number: $participant\nAge: $age\nSex: $sex\nRating: $score")
-        //uploadFiles("Participant Number: $participant\nAge: $age\nSex: $sex\nRating: $score")
-        var fileName: String = "SurveyData.txt"
-        var dataToWrite: String = "Participant Number: $participant\nAge: $age\nSex: $sex\nRating: $score"
+        var fileName: String = "surveyData.txt"
+        var dataToWrite: String = "Age: $age\nSex: $sex\nRating: $score\nResolution: $resVal"
         var outputFile : FileOutputStream = openFileOutput(fileName, MODE_PRIVATE)
         outputFile.write(dataToWrite.toByteArray())	//memo : String DATA
         outputFile.close()
 
         val nextIntent = Intent(this, FTPActivity::class.java)
         startActivity(nextIntent)
-
     }
 
     fun onRadioButtonClicked(view: View) {
@@ -96,50 +95,4 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     fun onCheckedChanged(group: RadioGroup, checkedId: Int) {
         onRadioButtonClicked(group)
     }
-
-    fun ftpFileUpload(message: String) {
-        Log.d("Into uploadFile:", message)
-
-    }
-
-    /*
-    private fun uploadFiles(message: String){
-        //val gyroFile = File(Environment.getExternalStorageDirectory().absolutePath + "/" + GYRO_SENSOR_FILE_NAME)
-        //val lightFile = File(Environment.getExternalStorageDirectory().absolutePath + "/" + LIGHT_SENSOR_FILE_NAME)
-        Log.d("Into uploadFile:", message)
-        val serverUrl = "http://115.85.180.227:10050/uploads"
-        val accFile = File(accessFile())
-
-        val fileUploadThread = Thread{
-            try{
-                val fileBody = accFile.asRequestBody("text/csv".toMediaTypeOrNull())
-                val requestBody = MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("userfile",ACCELEROMETER_SENSOR_FILE_NAME,fileBody)
-                    .build()
-
-                val request = Request.Builder()
-                    .url(serverUrl)
-                    .post(requestBody)
-                    .build()
-
-                val httpBuilder = OkHttpClient.Builder()
-                val okHttpClient = httpBuilder
-                    .connectTimeout(15, java.util.concurrent.TimeUnit.SECONDS)
-                    .writeTimeout(20,java.util.concurrent.TimeUnit.SECONDS)
-                    .build()
-
-                val response = okHttpClient.newCall(request).execute()
-                val responseStr = response.body?.string()
-                if (responseStr != null) {
-                    println("Request:$responseStr")
-                }else{
-                    println("Request: No request have arrived")
-                }
-            } catch (e: Exception){}
-        }
-        fileUploadThread.join()
-        Log.d("Thread:", "Thread is done")
-    }
-    */
 }
