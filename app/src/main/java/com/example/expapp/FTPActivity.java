@@ -59,20 +59,8 @@ public class FTPActivity extends Activity{
                 e.printStackTrace();
             }
         }
-<<<<<<< Updated upstream
         public void upload() throws FTPIllegalReplyException, IOException, FTPException {
-            /*
-            String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
-            String fileName = "Tears_720_accelerometer_0.csv";
-=======
-        public void upload(){
-            String baseDir = "/data/data/com.example.expapp/files";
-            String fileName = "Tears_240_accelerometer_0.csv";
->>>>>>> Stashed changes
-            String filePath = baseDir + File.separator + fileName;
 
-            File accFile = new File(filePath);
-            */
             int tmp = (int)(Math.random()*2100000000);
             String dirName = Integer.toString(tmp);
 
