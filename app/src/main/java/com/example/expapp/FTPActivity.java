@@ -11,14 +11,19 @@ import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import it.sauronsoftware.ftp4j.FTPClient;
 import it.sauronsoftware.ftp4j.FTPDataTransferListener;
+import it.sauronsoftware.ftp4j.FTPException;
+import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
+
 import com.example.expapp.SurveyActivity;
 import com.example.expapp.R;
 
+import java.util.Random;
 
 public class FTPActivity extends Activity{
 
@@ -44,9 +49,17 @@ public class FTPActivity extends Activity{
         }
         @Override
         public void run() {
-            upload();
+            try {
+                upload();
+            } catch (FTPIllegalReplyException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (FTPException e) {
+                e.printStackTrace();
+            }
         }
-        public void upload(){
+        public void upload() throws FTPIllegalReplyException, IOException, FTPException {
             /*
             String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
             String fileName = "Tears_720_accelerometer_0.csv";
@@ -54,31 +67,42 @@ public class FTPActivity extends Activity{
             filePath = "/data/data/com.example.expapp/files/Tears_240_accelerometer_0.csv";
             File accFile = new File(filePath);
             */
+            int tmp = (int)(Math.random()*2100000000);
+            String dirName = Integer.toString(tmp);
 
-            String fileName = "Tears_240_accelerometer_0.csv";
-            File accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
-            Log.d(TAG, accFile.toString());
-            uploadFile(accFile);
-            fileName = "Tears_240_gyro_0.csv";
-            accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
-            Log.d(TAG, accFile.toString());
-            uploadFile(accFile);
-            fileName = "Tears_240_light_0.csv";
-            accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
-            Log.d(TAG, accFile.toString());
-            uploadFile(accFile);
-        }
-    }
-
-    public void uploadFile(File file){
-        FTPClient client = new FTPClient();
-        try {
+            FTPClient client = new FTPClient();
             client.connect(FTP_HOST,21);
             client.login(FTP_USER, FTP_PASS);
             client.setType(FTPClient.TYPE_BINARY);
             client.setPassive(true);
+
             Log.d(TAG,"log-in");
             client.changeDirectory("/home/ftpuser");
+            client.createDirectory(dirName);
+            dirName = "/home/ftpuser/"+dirName;
+            client.changeDirectory(dirName);
+            String fileName = "Tears_240_accelerometer_0.csv";
+            File accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
+            Log.d(TAG, accFile.toString());
+            uploadFile(client, accFile, dirName);
+            fileName = "Tears_240_gyro_0.csv";
+            accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
+            Log.d(TAG, accFile.toString());
+            uploadFile(client, accFile, dirName);
+            fileName = "Tears_240_light_0.csv";
+            accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
+            Log.d(TAG, accFile.toString());
+            uploadFile(client, accFile, dirName);
+            fileName = "SurveyData.txt";
+            accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
+            Log.d(TAG, accFile.toString());
+            uploadFile(client, accFile, dirName);
+
+        }
+    }
+
+    public void uploadFile(FTPClient client, File file, String dirName){
+        try {
             client.upload(file, new MyTransferListener());
             handler.post(new Runnable() {
                 @Override

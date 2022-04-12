@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import java.io.FileOutputStream
 
 class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     RatingBar.OnRatingBarChangeListener, AdapterView.OnItemSelectedListener {
@@ -65,6 +66,12 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         participant++
         //ftpFileUpload("Participant Number: $participant\nAge: $age\nSex: $sex\nRating: $score")
         //uploadFiles("Participant Number: $participant\nAge: $age\nSex: $sex\nRating: $score")
+        var fileName: String = "SurveyData.txt"
+        var dataToWrite: String = "Participant Number: $participant\nAge: $age\nSex: $sex\nRating: $score"
+        var outputFile : FileOutputStream = openFileOutput(fileName, MODE_PRIVATE)
+        outputFile.write(dataToWrite.toByteArray())	//memo : String DATA
+        outputFile.close()
+
         val nextIntent = Intent(this, FTPActivity::class.java)
         startActivity(nextIntent)
 
