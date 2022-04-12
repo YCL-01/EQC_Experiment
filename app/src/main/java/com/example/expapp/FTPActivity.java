@@ -20,6 +20,8 @@ import com.example.expapp.R;
 
 public class FTPActivity extends Activity{
 
+    PlayerActivity mainActivity;
+
     static final String FTP_HOST= "115.85.180.227";
     static final String FTP_USER = "ftpuser";
     static final String FTP_PASS  ="ftpuser";
@@ -43,11 +45,16 @@ public class FTPActivity extends Activity{
             upload();
         }
         public void upload(){
+            /*
             String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
             String fileName = "Tears_720_accelerometer_0.csv";
             String filePath = baseDir + File.separator + fileName;
             filePath = "/data/data/com.example.expapp/files/Tears_240_accelerometer_0.csv";
             File accFile = new File(filePath);
+            */
+
+            String fileName = mainActivity.getACCELEROMETER_SENSOR_FILE_NAME();
+            File accFile = new File(getFilesDir(), filename);
             Log.d(TAG, accFile.toString());
             uploadFile(accFile);
         }
