@@ -42,6 +42,15 @@ public class FTPActivity extends Activity{
         super.onCreate(savedInstanceState);
         NThread nThread = new NThread();
         nThread.start();
+        while (true){
+            Thread.State state = nThread.getState();
+            if(state == Thread.State.TERMINATED){
+                break;
+            }
+        }
+        ActivityCompat.finishAffinity(this);
+        System.exit(0);
+
     }
 
     class NThread extends Thread{
@@ -59,20 +68,9 @@ public class FTPActivity extends Activity{
                 e.printStackTrace();
             }
         }
-<<<<<<< Updated upstream
-        public void upload() throws FTPIllegalReplyException, IOException, FTPException {
-            /*
-            String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
-            String fileName = "Tears_720_accelerometer_0.csv";
-=======
-        public void upload(){
-            String baseDir = "/data/data/com.example.expapp/files";
-            String fileName = "Tears_240_accelerometer_0.csv";
->>>>>>> Stashed changes
-            String filePath = baseDir + File.separator + fileName;
 
-            File accFile = new File(filePath);
-            */
+        public void upload() throws FTPIllegalReplyException, IOException, FTPException {
+
             int tmp = (int)(Math.random()*2100000000);
             String dirName = Integer.toString(tmp);
 
@@ -103,7 +101,6 @@ public class FTPActivity extends Activity{
             accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
             Log.d(TAG, accFile.toString());
             uploadFile(client, accFile, dirName);
-
         }
     }
 
@@ -120,7 +117,7 @@ public class FTPActivity extends Activity{
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Log.d(TAG," Failed");
+                    Log.d(TAG, " Failed");
                 }
             });
             e.printStackTrace();
@@ -130,7 +127,6 @@ public class FTPActivity extends Activity{
                 e2.printStackTrace();
             }
         }
-
     }
 
     /*******  Used to file upload and show progress  **********/

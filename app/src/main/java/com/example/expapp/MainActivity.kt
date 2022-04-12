@@ -60,17 +60,6 @@ class MainActivity : AppCompatActivity() {
                 btn_start.setOnClickListener{ startActivity(playerIntent) }
             }
         }
-
-        //OPTION 2
-        /*
-        val res_candidate = listOf(240, 480, 720, 1080)
-        val random = Random()
-        val num = random.nextInt(3)
-        resolution = res_candidate[num]
-        var playerIntent = Intent(this, PlayerActivity::class.java)
-        playerIntent.putExtra("value", resolution)
-        btn_start.setOnClickListener{ startActivity(playerIntent) }
-         */
     }
 
     fun verifyWriteStoragePermissions(activity: Activity?) {
