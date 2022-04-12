@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Workspace.expApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Workspace.expApp.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/expApp.iml" filepath="$PROJECT_DIR$/.idea/modules/expApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/expApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/expApp.app.iml" />
     </modules>

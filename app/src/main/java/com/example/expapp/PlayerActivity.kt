@@ -75,10 +75,8 @@ class PlayerActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
-        Log.d("Log", "PlayerActivity")
         var data:Int?
         resVal = intent.getIntExtra("value", 720)
-        Log.d("Log", "value: " + resVal)
 
         context = this;
 
@@ -103,7 +101,6 @@ class PlayerActivity : AppCompatActivity(){
     override fun onStart() {
         super.onStart()
         hasStartedWriting = true
-        Log.d("Listener Registered", "Listeners registered")
         sensorManager!!.registerListener(accelerometerListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
         sensorManager!!.registerListener(gyroscopeListener,gyroscope,SensorManager.SENSOR_DELAY_NORMAL)
         sensorManager!!.registerListener(lightSensorListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
@@ -138,7 +135,6 @@ class PlayerActivity : AppCompatActivity(){
         super.onStop()
         hasStartedWriting= false
 
-        Log.d("Listeners unregistered", "Listeners unregistered")
         sensorManager!!.unregisterListener(accelerometerListener)
         sensorManager!!.unregisterListener(gyroscopeListener)
         sensorManager!!.unregisterListener(lightSensorListener)

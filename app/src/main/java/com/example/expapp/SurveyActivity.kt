@@ -37,10 +37,6 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         context = this;
         resVal = intent.getIntExtra("value", 720)
 
-        Log.d("Survey------:",ACCELEROMETER_SENSOR_FILE_NAME.toString())
-        Log.d("Survey------:",GYRO_SENSOR_FILE_NAME.toString())
-        Log.d("Survey------:",LIGHT_SENSOR_FILE_NAME.toString())
-
         //Select Age
         val spinner = findViewById<View>(R.id.spinner) as Spinner
         val adapter = ArrayAdapter.createFromResource(

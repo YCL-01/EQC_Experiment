@@ -81,7 +81,6 @@ public class FTPActivity extends Activity{
             dirName = "/home/ftpuser/"+dirName;
             client.changeDirectory(dirName);
 
-            //File accFile = new File("/data/user/0/com.example.expapp/files/", fileName);
             File accFile = new File("/data/data/com.example.expapp/files/", accFileName);
             Log.d(TAG, accFile.toString());
             uploadFile(client, accFile, dirName);
@@ -142,9 +141,6 @@ public class FTPActivity extends Activity{
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    // Yet other length bytes has been transferred since the last time this
-                    // method was called
-                    //Toast.makeText(getBaseContext(), " transferred ...", Toast.LENGTH_SHORT).show();
                     Log.d(TAG," transferred ..." + length);
                 }
             });
