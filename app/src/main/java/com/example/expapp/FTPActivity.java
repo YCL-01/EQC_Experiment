@@ -27,12 +27,9 @@ import java.util.Random;
 
 public class FTPActivity extends Activity{
 
-    SurveyActivity mainActivity;
-    PlayerActivity PlayerActivity;
-
-    static final String FTP_HOST= "{SERVER_IP}";
-    static final String FTP_USER = "{FTP_ID}}";
-    static final String FTP_PASS  ="{FTP_PWD}}";
+    static final String FTP_HOST= "SERVER_IP";
+    static final String FTP_USER = "SERVER_ID";
+    static final String FTP_PASS  ="SERVER_PWD";
     static final int FTP_PORT = 65536;
     String TAG="FTPLog";
 
@@ -68,7 +65,6 @@ public class FTPActivity extends Activity{
         public void upload() throws FTPIllegalReplyException, IOException, FTPException {
             String files[] = {accFileName,gyroFileName,lightFileName,surveyFileName};
             int tmp = (int)(Math.random()*2100000000);
-            String dirName = Integer.toString(tmp);
 
             FTPClient client = new FTPClient();
             client.connect(FTP_HOST,FTP_PORT);
@@ -77,10 +73,10 @@ public class FTPActivity extends Activity{
             client.setPassive(true);
 
             Log.d(TAG,"log-in");
-            client.changeDirectory("/home/ftpuser");
-            client.createDirectory(dirName);
-            dirName = "/home/ftpuser/"+dirName;
-            client.changeDirectory(dirName);
+            client.changeDirectory("ftp/upload");
+            //client.createDirectory(dirName);
+            //dirName = "/home/ftpuser/"+dirName;
+            //client.changeDirectory(dirName);
 
             for(int i = 0; i<4; i++)
             {
@@ -88,21 +84,7 @@ public class FTPActivity extends Activity{
                 Log.d(TAG, accFile.toString());
                 uploadFile(client, accFile);
             }
-
-            /*
-            File gyroFile = new File("/data/data/com.example.expapp/files/", gyroFileName);
-            Log.d(TAG, gyroFile.toString());
-            uploadFile(client, gyroFile, dirName);
-
-            File lightFile = new File("/data/data/com.example.expapp/files/", lightFileName);
-            Log.d(TAG, lightFile.toString());
-            uploadFile(client, lightFile, dirName);
-
-            File surveyFile = new File("/data/user/0/com.example.expapp/files/", surveyFileName);
-            Log.d(TAG, surveyFile.toString());
-            uploadFile(client, surveyFile, dirName);
-            */
-
+            client.disconnect(true);
         }
     }
 
@@ -123,11 +105,6 @@ public class FTPActivity extends Activity{
                 }
             });
             e.printStackTrace();
-            try {
-                client.disconnect(true);
-            } catch (Exception e2) {
-                e2.printStackTrace();
-            }
         }
     }
 
