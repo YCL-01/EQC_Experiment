@@ -77,9 +77,9 @@ public class FTPActivity extends Activity{
             client.setPassive(true);
 
             Log.d(TAG,"log-in");
-            client.changeDirectory("/home/ftpuser");
+            client.changeDirectory("/home/ftpuser/ftp/upload");
             client.createDirectory(dirName);
-            dirName = "/home/ftpuser/"+dirName;
+            dirName = "/home/ftpuser/ftp/upload/"+dirName;
             client.changeDirectory(dirName);
 
             for(int i = 0; i<4; i++)
