@@ -31,18 +31,16 @@ import java.util.TimeZone;
 
 public class FTPActivity extends Activity{
 
-    SurveyActivity mainActivity;
-    PlayerActivity PlayerActivity;
-
-    static final String FTP_HOST= "115.85.180.227";
-    static final String FTP_USER = "ftpuser";
-    static final String FTP_PASS  ="ftpuser";
+    static final String FTP_HOST= "SERVER_IP";
+    static final String FTP_USER = "ID";
+    static final String FTP_PASS  ="PW";
+    static final int FTP_PORT = 65321;
     String TAG="FTPLog";
+
     String accFileName = "acc.csv";
     String gyroFileName = "gyro.csv";
     String lightFileName = "light.csv";
     String surveyFileName = "surveyData.txt";
-
 
     Handler handler = new Handler();
 
@@ -69,41 +67,33 @@ public class FTPActivity extends Activity{
             }
         }
         public void upload() throws FTPIllegalReplyException, IOException, FTPException {
-
+            String files[] = {accFileName,gyroFileName,lightFileName,surveyFileName};
             int tmp = (int)(Math.random()*2100000000);
-            String dirName = Integer.toString(tmp);
+            String dirName = String.valueOf(tmp);
 
             FTPClient client = new FTPClient();
-            client.connect(FTP_HOST,21);
+            client.connect(FTP_HOST,FTP_PORT);
             client.login(FTP_USER, FTP_PASS);
             client.setType(FTPClient.TYPE_BINARY);
             client.setPassive(true);
 
             Log.d(TAG,"log-in");
-            client.changeDirectory("/home/ftpuser");
+            client.changeDirectory("ftp/upload");
             client.createDirectory(dirName);
-            dirName = "/home/ftpuser/"+dirName;
             client.changeDirectory(dirName);
+            //client.changeDirectory(dirName);
 
-            File accFile = new File("/data/data/com.example.expapp/files/", accFileName);
-            Log.d(TAG, accFile.toString());
-            uploadFile(client, accFile, dirName);
-
-            File gyroFile = new File("/data/data/com.example.expapp/files/", gyroFileName);
-            Log.d(TAG, gyroFile.toString());
-            uploadFile(client, gyroFile, dirName);
-
-            File lightFile = new File("/data/data/com.example.expapp/files/", lightFileName);
-            Log.d(TAG, lightFile.toString());
-            uploadFile(client, lightFile, dirName);
-
-            File surveyFile = new File("/data/user/0/com.example.expapp/files/", surveyFileName);
-            Log.d(TAG, surveyFile.toString());
-            uploadFile(client, surveyFile, dirName);
+            for(int i = 0; i<4; i++)
+            {
+                File accFile = new File("/data/data/com.example.expapp/files/", files[i]);
+                Log.d(TAG, accFile.toString());
+                uploadFile(client, accFile);
+            }
+            client.disconnect(true);
         }
     }
 
-    public void uploadFile(FTPClient client, File file, String dirName){
+    public void uploadFile(FTPClient client, File file){
         try {
             client.upload(file, new MyTransferListener());
             handler.post(new Runnable() {
@@ -120,11 +110,6 @@ public class FTPActivity extends Activity{
                 }
             });
             e.printStackTrace();
-            try {
-                client.disconnect(true);
-            } catch (Exception e2) {
-                e2.printStackTrace();
-            }
         }
     }
 
