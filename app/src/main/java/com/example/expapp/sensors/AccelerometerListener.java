@@ -38,18 +38,20 @@ public class AccelerometerListener implements SensorEventListener {
             File file = new File(filePath);
             CSVWriter writer;
             FileWriter mFileWriter;
+            String[] entries = "time,x,y,z".split(",");
 
             try{
                 // File exist
                 if(file.exists()&&!file.isDirectory())
                 {
-                        mFileWriter = new FileWriter(filePath, true);
-                        writer = new CSVWriter(mFileWriter);
+                    mFileWriter = new FileWriter(filePath, true);
+                    writer = new CSVWriter(mFileWriter);
                 }
                 else
                 {
                     file.createNewFile();
                     writer = new CSVWriter(new FileWriter(filePath));
+                    writer.writeNext(entries);
                 }
 
                 float[] sensorValues = (sensorEvent.values);
@@ -62,7 +64,6 @@ public class AccelerometerListener implements SensorEventListener {
                     data[i+1]=String.valueOf(sensorValues[i]);
                 }
                 writer.writeNext(data);
-
                 writer.close();
             } catch (IOException e) {
                 e.printStackTrace();

@@ -39,6 +39,8 @@ public class LightSensorListener implements SensorEventListener {
             File file = new File(filePath);
             CSVWriter writer;
             FileWriter mFileWriter;
+            String[] entries = "time,data".split(",");
+
             try{
                 // File exist
                 if(file.exists()&&!file.isDirectory())
@@ -49,6 +51,7 @@ public class LightSensorListener implements SensorEventListener {
                 else
                 {
                     writer = new CSVWriter(new FileWriter(filePath));
+                    writer.writeNext(entries);
                 }
 
                 float[] sensorValues = (sensorEvent.values);

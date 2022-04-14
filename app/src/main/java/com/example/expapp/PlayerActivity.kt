@@ -80,10 +80,22 @@ class PlayerActivity : AppCompatActivity(){
 
         context = this;
 
-        //Initialize file names
+        //Initialize files
         ACCELEROMETER_SENSOR_FILE_NAME  = "acc.csv"
         GYRO_SENSOR_FILE_NAME = "gyro.csv"
         LIGHT_SENSOR_FILE_NAME = "light.csv"
+        val fileList = listOf<String>(ACCELEROMETER_SENSOR_FILE_NAME,GYRO_SENSOR_FILE_NAME,LIGHT_SENSOR_FILE_NAME)
+        val baseDir = "/data/data/com.example.expapp/files"
+        for(i in fileList){
+            var file = File(baseDir + File.separator + i)
+            if(file.exists()){
+                println("file exists!")
+                file.delete()
+            }else{
+                println("file does not exist!")
+                continue
+            }
+        }
 
         //Initialize Sensor Manager
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager

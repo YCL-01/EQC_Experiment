@@ -1,6 +1,7 @@
 package com.example.expapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -31,22 +32,25 @@ import java.util.TimeZone;
 
 public class FTPActivity extends Activity{
 
-    static final String FTP_HOST= "SERVER_IP";
-    static final String FTP_USER = "ID";
-    static final String FTP_PASS  ="PW";
-    static final int FTP_PORT = 65321;
+    static final String FTP_HOST= "115.85.180.227";
+    static final String FTP_USER = "ftpuser";
+    static final String FTP_PASS  ="wings";
+    static final int FTP_PORT = 10050;
     String TAG="FTPLog";
 
     String accFileName = "acc.csv";
     String gyroFileName = "gyro.csv";
     String lightFileName = "light.csv";
     String surveyFileName = "surveyData.txt";
-
+    String userName = null;
     Handler handler = new Handler();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        String playerName = intent.getStringExtra("name");
+        userName = playerName;
         NThread nThread = new NThread();
         nThread.start();
     }
@@ -69,7 +73,7 @@ public class FTPActivity extends Activity{
         public void upload() throws FTPIllegalReplyException, IOException, FTPException {
             String files[] = {accFileName,gyroFileName,lightFileName,surveyFileName};
             int tmp = (int)(Math.random()*2100000000);
-            String dirName = String.valueOf(tmp);
+            String dirName = userName;
 
             FTPClient client = new FTPClient();
             client.connect(FTP_HOST,FTP_PORT);

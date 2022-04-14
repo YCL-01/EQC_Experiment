@@ -4,15 +4,18 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
 import android.widget.*
+import kotlinx.android.synthetic.main.activity_survey.*
 import java.io.FileOutputStream
 
 class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     RatingBar.OnRatingBarChangeListener, AdapterView.OnItemSelectedListener {
 
     //Survey Data
+    private var emailAddress: String? = null
     private var age: String? = null
     private var sex: String? = null
     private var score = 0.0
@@ -62,6 +65,8 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onClick(v: View?) {
+        var resultText = Name.text.toString()
+        println("name: $resultText")
         var fileName: String = "surveyData.txt"
         var dataToWrite: String = "Age: $age\nSex: $sex\nRating: $score\nResolution: $resVal"
         var outputFile : FileOutputStream = openFileOutput(fileName, MODE_PRIVATE)
@@ -69,6 +74,7 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         outputFile.close()
 
         val nextIntent = Intent(this, FTPActivity::class.java)
+        nextIntent.putExtra("name", resultText.toString())
         startActivity(nextIntent)
     }
 

@@ -18,7 +18,7 @@
     <string name="VideoQualityRating">Video Quality Rating</string>
     <string name="Send_Results_Button">Finish</string>
     <string name="Survey_Info">Survey Explanation:
-    \n 1. Please fill out your age, your sex, and how the video quality was on a scale from 1 to 5.
+    \n 1. Please fill out your name, age, gender, and how the video quality was on a scale from 1 to 5.
     \n 2. Please click the Finish button and you are done </string>
 
     <string-array name="ages">

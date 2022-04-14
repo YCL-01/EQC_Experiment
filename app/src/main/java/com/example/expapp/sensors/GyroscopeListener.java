@@ -39,16 +39,19 @@ public class GyroscopeListener implements SensorEventListener {
             File file = new File(filePath);
             CSVWriter writer;
             FileWriter mFileWriter;
+            String[] entries = "time,x,y,z".split(",");
             try{
                 // File exist
                 if(file.exists()&&!file.isDirectory())
                 {
                     mFileWriter = new FileWriter(filePath, true);
                     writer = new CSVWriter(mFileWriter);
+
                 }
                 else
                 {
                     writer = new CSVWriter(new FileWriter(filePath));
+                    writer.writeNext(entries);
                 }
 
                 float[] sensorValues = (sensorEvent.values);
