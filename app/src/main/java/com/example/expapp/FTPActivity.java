@@ -32,10 +32,10 @@ import java.util.TimeZone;
 
 public class FTPActivity extends Activity{
 
-    static final String FTP_HOST= "115.85.180.227";
-    static final String FTP_USER = "ftpuser";
-    static final String FTP_PASS  ="wings";
-    static final int FTP_PORT = 10050;
+    static final String FTP_HOST= FTP_SERV_IP;
+    static final String FTP_USER = FTP_USER_ID;
+    static final String FTP_PASS  =FTP_USER_PW;
+    static final int FTP_PORT = FTP_PASSIVE_PORT;
     String TAG="FTPLog";
 
     String accFileName = "acc.csv";
