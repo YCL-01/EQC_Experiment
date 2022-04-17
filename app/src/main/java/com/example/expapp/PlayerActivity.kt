@@ -25,13 +25,15 @@ import android.content.Intent
 import android.os.Environment
 import androidx.core.content.FileProvider
 import com.google.android.exoplayer2.Player
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.util.ArrayList
 
 
 class PlayerActivity : AppCompatActivity(){
-    //Resolution Value
+    //Init Var
     private var resVal = 0
+    private var typeVal = ""
 
     //Participant
     private var participant = 0
@@ -60,7 +62,7 @@ class PlayerActivity : AppCompatActivity(){
     private var playWhenReady = true
     private var currentWindow = 0
     private var playbackPosition = 0L
-    private val dashURL = "http://130.245.144.153:5000/video/dash_test2/tears.mpd"
+    private var dashURL = ""
 
     //hasStartedWriting file
     var hasStartedWriting = false
@@ -77,8 +79,15 @@ class PlayerActivity : AppCompatActivity(){
 
         var data:Int?
         resVal = intent.getIntExtra("value", 720)
+        typeVal = intent.getStringExtra("type").toString()
 
         context = this;
+
+        if (typeVal == "static"){
+            dashURL = "http://130.245.144.153:5000/video/static/static.mpd"
+        }else if(typeVal == "dynamic") {
+            dashURL = "http://130.245.144.153:5000/video/dynamic/dynamic.mpd"
+        }
 
         //Initialize files
         ACCELEROMETER_SENSOR_FILE_NAME  = "acc.csv"
@@ -207,10 +216,10 @@ class PlayerActivity : AppCompatActivity(){
         var paramList = IntArray(6)
 
         when(resVal){
-            240 -> paramList = intArrayOf(320, 142, 700000, 320, 142, 800000)
-            480 -> paramList = intArrayOf(854, 380, 1800000, 854, 380, 2000000)
-            720 -> paramList = intArrayOf(1280, 570, 7000000, 1280, 570, 8000000)
-            1080 -> paramList = intArrayOf(1920, 856, 15000000, 1920, 856, 20000000)
+            240 -> paramList = intArrayOf(320, 240, 1000000, 320, 240, 1500000)
+            480 -> paramList = intArrayOf(640, 480, 3000000, 640, 480, 3500000)
+            720 -> paramList = intArrayOf(1280, 720, 10000000, 1280, 720, 15000000)
+            1080 -> paramList = intArrayOf(1920, 1080, 20000000, 1920, 1080, 30000000)
         }
         return paramList
     }

@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     //Sample video
     private var resolution : Int = 0
+    private var vidType : String = ""
 
     //Check Storage Permissions
     private val REQUEST_EXTERNAL_STORAGE: Int = 1
@@ -41,24 +42,27 @@ class MainActivity : AppCompatActivity() {
         resolGp.setOnCheckedChangeListener { group, checkedId ->
             if(checkedId==R.id.chk_240) {
                 resolution = 240
-                var playerIntent = Intent(this, PlayerActivity::class.java)
-                playerIntent.putExtra("value", resolution)
-                btn_start.setOnClickListener{ startActivity(playerIntent) }
             }else if(checkedId==R.id.chk_480) {
                 resolution = 480
-                var playerIntent = Intent(this, PlayerActivity::class.java)
-                playerIntent.putExtra("value", resolution)
-                btn_start.setOnClickListener{ startActivity(playerIntent) }
             }else if(checkedId==R.id.chk_720) {
                 resolution = 720
-                var playerIntent = Intent(this, PlayerActivity::class.java)
-                playerIntent.putExtra("value", resolution)
-                btn_start.setOnClickListener{ startActivity(playerIntent) }
             }else if(checkedId==R.id.chk_1080) {
                 resolution = 1080
+            }
+        }
+        TypeGp.setOnCheckedChangeListener { group, checkedId ->
+            if(checkedId==R.id.chk_dynamic) {
+                vidType = "dynamic"
                 var playerIntent = Intent(this, PlayerActivity::class.java)
                 playerIntent.putExtra("value", resolution)
+                playerIntent.putExtra("type", vidType)
                 btn_start.setOnClickListener{ startActivity(playerIntent) }
+            }else if(checkedId==R.id.chk_static) {
+                vidType = "static"
+                var playerIntent = Intent(this, PlayerActivity::class.java)
+                playerIntent.putExtra("value", resolution)
+                playerIntent.putExtra("type", vidType)
+                btn_start.setOnClickListener { startActivity(playerIntent) }
             }
         }
     }

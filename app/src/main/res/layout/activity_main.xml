@@ -106,6 +106,47 @@
 
     <!--Option 2 -->
 
+    <RadioGroup
+        android:id="@+id/TypeGp"
+        android:layout_width="345dp"
+        android:layout_height="84dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.424"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.655">
+
+        <RadioButton
+            android:id="@+id/chk_static"
+            android:layout_width="116dp"
+            android:layout_height="63dp"
+            android:checked="false"
+            android:text="Static"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.738"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.634" />
+
+        <RadioButton
+            android:id="@+id/chk_dynamic"
+            android:layout_width="120dp"
+            android:layout_height="62dp"
+            android:checked="false"
+            android:text="Dynamic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.332"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.635" />
+
+    </RadioGroup>
+
     <Button
         android:id="@+id/btn_start"
         android:layout_width="324dp"
@@ -118,6 +159,8 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.887" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

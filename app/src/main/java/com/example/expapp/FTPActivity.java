@@ -32,10 +32,10 @@ import java.util.TimeZone;
 
 public class FTPActivity extends Activity{
 
-    static final String FTP_HOST= "115.85.180.227";
-    static final String FTP_USER = "ftpuser";
-    static final String FTP_PASS  ="wings";
-    static final int FTP_PORT = 10050;
+    static final String FTP_HOST= {HOST};
+    static final String FTP_USER = {USER};
+    static final String FTP_PASS  ={PASS};
+    static final int FTP_PORT = {PORT};
     String TAG="FTPLog";
 
     String accFileName = "acc.csv";
@@ -69,10 +69,12 @@ public class FTPActivity extends Activity{
             } catch (FTPException e) {
                 e.printStackTrace();
             }
+            moveTaskToBack(true);
+            finishAndRemoveTask();
+            android.os.Process.killProcess(android.os.Process.myPid());
         }
         public void upload() throws FTPIllegalReplyException, IOException, FTPException {
             String files[] = {accFileName,gyroFileName,lightFileName,surveyFileName};
-            int tmp = (int)(Math.random()*2100000000);
             String dirName = userName;
 
             FTPClient client = new FTPClient();
@@ -94,6 +96,7 @@ public class FTPActivity extends Activity{
                 uploadFile(client, accFile);
             }
             client.disconnect(true);
+
         }
     }
 
