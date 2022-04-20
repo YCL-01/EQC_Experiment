@@ -16,9 +16,6 @@ import android.app.Activity
 
 class MainActivity : AppCompatActivity() {
 
-    // User Info
-    var name: String = ""
-
     //Check Storage Permissions
     private val REQUEST_EXTERNAL_STORAGE: Int = 1
     private val PERMISSIONS_STORAGE = arrayOf<String>(
@@ -35,9 +32,9 @@ class MainActivity : AppCompatActivity() {
 
 
         btn_start.setOnClickListener{
-            var name = nameInput.text.toString()
+            var userName = nameInput.text.toString()
             var playerIntent = Intent(this, PlayerActivity::class.java)
-            playerIntent.putExtra("name", name)
+            playerIntent.putExtra("name", userName)
             startActivity(playerIntent)
         }
     }

@@ -52,6 +52,7 @@ public class FTPActivity extends Activity{
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         String playerName = intent.getStringExtra("name");
+        Integer trial = intent.getIntExtra("trial");
         // Need Change the PlayerName
         //String playerName = mainActivity.retName();
         System.out.println("playerName : "+playerName);

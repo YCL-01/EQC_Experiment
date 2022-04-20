@@ -18,11 +18,13 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     RatingBar.OnRatingBarChangeListener, AdapterView.OnItemSelectedListener {
 
     //Survey Data
-    private var emailAddress: String? = null
     private var age: String? = null
     private var sex: String? = null
     private var score = 0.0
     private var resVal = 0
+    private var vidType = ""
+    private var trial = 0
+    private var userName = ""
 
     //Context
     private lateinit var context: Context
@@ -40,7 +42,11 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         setContentView(R.layout.activity_survey)
 
         context = this;
-        resVal = intent.getIntExtra("value", 720)
+        resVal = intent.getIntExtra("resVal", 720)
+        vidType = intent.getStringExtra("vidType").toString()
+        trial = intent.getIntExtra("trial", 0)
+        userName = intent.getStringExtra("name").toString()
+
 
         //Select Age
         val spinner = findViewById<View>(R.id.spinner) as Spinner
@@ -68,13 +74,14 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onClick(v: View?) {
         var fileName: String = "surveyData.txt"
-        var dataToWrite: String = "Age: $age\nSex: $sex\nRating: $score\nResolution: $resVal"
+        var dataToWrite: String = "Age: $age\nSex: $sex\nRating: $score\nResolution: $resVal\nVideo: $vidType"
         var outputFile : FileOutputStream = openFileOutput(fileName, MODE_PRIVATE)
         outputFile.write(dataToWrite.toByteArray())	//memo : String DATA
         outputFile.close()
 
         val nextIntent = Intent(this, FTPActivity::class.java)
-        //nextIntent.putExtra("name", resultText.toString())
+        nextIntent.putExtra("name", userName)
+        nextIntent.putExtra("trial", userName)
         startActivity(nextIntent)
     }
 

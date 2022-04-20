@@ -36,8 +36,10 @@ import java.util.ArrayList
 class PlayerActivity : AppCompatActivity(){
     //Init Var
     private var resVal = 0
-    private var typeVal = ""
+    private var trial = 0
     private var vidNum = 0
+    private var vidType = ""
+    private var userName = ""
 
     //Sensor file names
     var ACCELEROMETER_SENSOR_FILE_NAME: String= "acc.csv"
@@ -79,10 +81,14 @@ class PlayerActivity : AppCompatActivity(){
         setContentView(R.layout.activity_player)
 
         // Video initialize
-        vidNum = sendGet().toInt()
-        val (url, resType) = getUrl(vidNum)
+        userName = intent.getStringExtra("name").toString()// MainActivity에서 받음
+        trial = intent.getIntExtra("trial", 0)// FTPActivity에서 받음
+        trial += 1 // playerActivity 실행때마다 더해줌
+        vidNum = sendGet().toInt() // node server 통신
+        var (url, vid, res) = getUrl(vidNum) // vidNum에 따라서 url, resolution 정보 구분
         dashURL = baseURL + url
-        resVal = resType
+        vidType = vid
+        resVal = res
 
         context = this;
 
@@ -114,7 +120,6 @@ class PlayerActivity : AppCompatActivity(){
         gyroscopeListener = GyroscopeListener(this)
         lightSensorListener = LightSensorListener(this)
     }
-
 
 
     override fun onStart() {
@@ -163,7 +168,10 @@ class PlayerActivity : AppCompatActivity(){
         releasePlayer()
 
         val goToSurvey = Intent(this, SurveyActivity::class.java)
-        goToSurvey.putExtra("value", resVal)
+        goToSurvey.putExtra("resVal", resVal)
+        goToSurvey.putExtra("vidType", vidType)
+        goToSurvey.putExtra("trial", trial)
+        goToSurvey.putExtra("name", userName)
         startActivity(goToSurvey)
     }
 
@@ -233,33 +241,45 @@ class PlayerActivity : AppCompatActivity(){
         val response = client.newCall(request).execute()
         return response.body!!.string()
     }
-    private fun getUrl(vidNum: Int): Pair<String, Int> {
+
+    private fun getUrl(vidNum: Int): Triple<String, String, Int> {
         var url = ""
+        var vid = ""
         if(vidNum in 0..19){
             url = "static/"
             if(vidNum in 0..3){
                 url += "static_0/static.mpd"
+                vid = "static_0"
             }else if(vidNum in 4..7){
                 url += "static_1/static.mpd"
+                vid = "static_1"
             }else if(vidNum in 8..11){
                 url += "static_2/static.mpd"
+                vid = "static_2"
             }else if(vidNum in 12..15){
                 url += "static_3/static.mpd"
+                vid = "static_3"
             }else if(vidNum in 16..19){
                 url += "static_4/static.mpd"
+                vid = "static_4"
             }
         }else{
             url = "dynamic/"
             if(vidNum in 20..23){
                 url += "dynamic_0/dynamic.mpd"
+                vid = "dynamic_0"
             }else if(vidNum in 24..27){
                 url += "dynamic_1/dynamic.mpd"
+                vid = "dynamic_1"
             }else if(vidNum in 28..31){
                 url += "dynamic_2/dynamic.mpd"
+                vid = "dynamic_0"
             }else if(vidNum in 32..35){
                 url += "dynamic_3/dynamic.mpd"
+                vid = "dynamic_0"
             }else if(vidNum in 36..39){
                 url += "dynamic_4dynamic.mpd/"
+                vid = "dynamic_0"
             }
         }
         var resNum = vidNum%4
@@ -270,6 +290,6 @@ class PlayerActivity : AppCompatActivity(){
             2 -> resType = 720
             3 -> resType = 1080
         }
-        return Pair(url, resType)
+        return Triple(url, vid, resType)
     }
 }
