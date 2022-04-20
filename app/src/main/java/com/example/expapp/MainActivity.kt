@@ -9,6 +9,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.app.Activity
+import android.widget.EditText
+import kotlinx.android.synthetic.main.activity_survey.*
 import java.io.File
 import java.util.Random
 
@@ -18,6 +20,14 @@ import java.util.Random
 // Main - Player(+Listener) - Info
 
 class MainActivity : AppCompatActivity() {
+
+    // Count
+    companion object{
+
+        var Count : Int = 0
+    }
+    // User Info
+    var name: String = ""
 
     //Sample video
     private var resolution : Int = 0
@@ -56,15 +66,28 @@ class MainActivity : AppCompatActivity() {
                 var playerIntent = Intent(this, PlayerActivity::class.java)
                 playerIntent.putExtra("value", resolution)
                 playerIntent.putExtra("type", vidType)
-                btn_start.setOnClickListener{ startActivity(playerIntent) }
+                btn_start.setOnClickListener{
+                    setName()
+                    startActivity(playerIntent)
+                }
             }else if(checkedId==R.id.chk_static) {
                 vidType = "static"
                 var playerIntent = Intent(this, PlayerActivity::class.java)
                 playerIntent.putExtra("value", resolution)
                 playerIntent.putExtra("type", vidType)
-                btn_start.setOnClickListener { startActivity(playerIntent) }
+                btn_start.setOnClickListener {
+                    setName()
+                    startActivity(playerIntent)
+                }
             }
         }
+
+    }
+    fun setName(){
+        name = name3.text.toString()
+    }
+    fun retName(): String {
+        return name
     }
 
     fun verifyWriteStoragePermissions(activity: Activity?) {

@@ -8,6 +8,34 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/name4"
+        android:layout_width="76dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="120dp"
+        android:text="Name"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/name3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.336" />
+
+    <EditText
+        android:id="@+id/name3"
+        android:layout_width="278dp"
+        android:layout_height="56dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.397" />
+
+    <TextView
         android:id="@+id/textView"
         android:layout_width="333dp"
         android:layout_height="33dp"
@@ -16,10 +44,11 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.085" />
+        app:layout_constraintVertical_bias="0.087" />
+
+    <!-- Option 1 -->
 
     <TextView
         android:id="@+id/textView2"
@@ -29,25 +58,25 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.534"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.256" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.105" />
 
-    <!-- Option 1 -->
+
+    <!--Option 2 -->
 
     <RadioGroup
         android:id="@+id/resolGp"
         android:layout_width="354dp"
         android:layout_height="118dp"
+        android:layout_marginTop="196dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499">
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <RadioButton
             android:id="@+id/chk_240"
@@ -103,21 +132,16 @@
 
     </RadioGroup>
 
-
-    <!--Option 2 -->
-
     <RadioGroup
         android:id="@+id/TypeGp"
         android:layout_width="345dp"
         android:layout_height="84dp"
+        android:layout_marginBottom="396dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.424"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.655">
+        app:layout_constraintStart_toStartOf="parent">
 
         <RadioButton
             android:id="@+id/chk_static"
@@ -149,18 +173,17 @@
 
     <Button
         android:id="@+id/btn_start"
-        android:layout_width="324dp"
-        android:layout_height="142dp"
+        android:layout_width="373dp"
+        android:layout_height="149dp"
         android:gravity="center"
         android:text="@string/btn_start"
         android:textSize="35sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.887" />
-
+        app:layout_constraintTop_toBottomOf="@+id/TypeGp"
+        app:layout_constraintVertical_bias="0.358" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

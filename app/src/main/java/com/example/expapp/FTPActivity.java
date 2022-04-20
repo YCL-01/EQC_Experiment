@@ -32,6 +32,8 @@ import java.util.TimeZone;
 
 public class FTPActivity extends Activity{
 
+    private MainActivity mainActivity = new MainActivity();
+
     static final String FTP_HOST= {HOST};
     static final String FTP_USER = {USER};
     static final String FTP_PASS  ={PASS};
@@ -50,6 +52,9 @@ public class FTPActivity extends Activity{
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         String playerName = intent.getStringExtra("name");
+        // Need Change the PlayerName
+        //String playerName = mainActivity.retName();
+        System.out.println("playerName : "+playerName);
         userName = playerName;
         NThread nThread = new NThread();
         nThread.start();
