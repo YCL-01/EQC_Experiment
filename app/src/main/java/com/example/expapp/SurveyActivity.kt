@@ -9,7 +9,10 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_survey.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.io.FileOutputStream
+import java.net.URL
 
 class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     RatingBar.OnRatingBarChangeListener, AdapterView.OnItemSelectedListener {
@@ -25,7 +28,6 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     private lateinit var context: Context
 
     //Participant Number
-    private var participant = 0
     private var playerActivity: PlayerActivity = PlayerActivity()
 
     //Sensor file names
@@ -65,8 +67,6 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onClick(v: View?) {
-        var resultText = Name.text.toString()
-        println("name: $resultText")
         var fileName: String = "surveyData.txt"
         var dataToWrite: String = "Age: $age\nSex: $sex\nRating: $score\nResolution: $resVal"
         var outputFile : FileOutputStream = openFileOutput(fileName, MODE_PRIVATE)
@@ -74,7 +74,7 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         outputFile.close()
 
         val nextIntent = Intent(this, FTPActivity::class.java)
-        nextIntent.putExtra("name", resultText.toString())
+        //nextIntent.putExtra("name", resultText.toString())
         startActivity(nextIntent)
     }
 
@@ -94,7 +94,16 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         println("Rating: $score")
     }
 
-    fun onCheckedChanged(group: RadioGroup, checkedId: Int) {
-        onRadioButtonClicked(group)
+    private fun sendGet(): String {
+        val client = OkHttpClient()
+        val url = URL("http://130.245.144.153/count")
+        val request = Request.Builder()
+            .url(url)
+            .get()
+            .build()
+
+        val response = client.newCall(request).execute()
+        return response.body!!.string()
     }
+
 }

@@ -24,10 +24,12 @@ import com.google.android.exoplayer2.util.Util
 import android.content.Intent
 import android.os.Environment
 import androidx.core.content.FileProvider
-import com.example.expapp.MainActivity.Companion.Count
 import com.google.android.exoplayer2.Player
 import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.io.File
+import java.net.URL
 import java.util.ArrayList
 
 
@@ -35,9 +37,7 @@ class PlayerActivity : AppCompatActivity(){
     //Init Var
     private var resVal = 0
     private var typeVal = ""
-
-    //Participant
-    private var participant = 0
+    private var vidNum = 0
 
     //Sensor file names
     var ACCELEROMETER_SENSOR_FILE_NAME: String= "acc.csv"
@@ -56,7 +56,6 @@ class PlayerActivity : AppCompatActivity(){
     private var gyroscopeListener: GyroscopeListener? = null
     private var lightSensorListener: LightSensorListener? = null
 
-
     //Video player variables
     private lateinit var trackSelector: DefaultTrackSelector
     private var player: ExoPlayer?= null
@@ -64,6 +63,7 @@ class PlayerActivity : AppCompatActivity(){
     private var currentWindow = 0
     private var playbackPosition = 0L
     private var dashURL = ""
+    private var baseURL = "http://130.245.144.153:5000/video/"
 
     //hasStartedWriting file
     var hasStartedWriting = false
@@ -78,17 +78,13 @@ class PlayerActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
-        var data:Int?
-        resVal = intent.getIntExtra("value", 720)
-        typeVal = intent.getStringExtra("type").toString()
+        // Video initialize
+        vidNum = sendGet().toInt()
+        val (url, resType) = getUrl(vidNum)
+        dashURL = baseURL + url
+        resVal = resType
 
         context = this;
-
-        if (typeVal == "static"){
-            dashURL = "http://130.245.144.153:5000/video/static/static.mpd"
-        }else if(typeVal == "dynamic") {
-            dashURL = "http://130.245.144.153:5000/video/dynamic/dynamic.mpd"
-        }
 
         //Initialize files
         ACCELEROMETER_SENSOR_FILE_NAME  = "acc.csv"
@@ -117,8 +113,9 @@ class PlayerActivity : AppCompatActivity(){
         accelerometerListener = AccelerometerListener(this)
         gyroscopeListener = GyroscopeListener(this)
         lightSensorListener = LightSensorListener(this)
-        Count++;
     }
+
+
 
     override fun onStart() {
         super.onStart()
@@ -217,12 +214,62 @@ class PlayerActivity : AppCompatActivity(){
         var paramList = IntArray(6)
 
         when(resVal){
-            240 -> paramList = intArrayOf(320, 240, 1000000, 320, 240, 1500000)
-            480 -> paramList = intArrayOf(640, 480, 3000000, 640, 480, 3500000)
-            720 -> paramList = intArrayOf(1280, 720, 10000000, 1280, 720, 15000000)
-            1080 -> paramList = intArrayOf(1920, 1080, 20000000, 1920, 1080, 30000000)
+            240 -> paramList = intArrayOf(320, 240, 500000, 320, 240, 800000)
+            480 -> paramList = intArrayOf(640, 480, 2000000, 640, 480, 3500000)
+            720 -> paramList = intArrayOf(1280, 720, 7000000, 1280, 720, 11000000)
+            1080 -> paramList = intArrayOf(1920, 1080, 11100000, 1920, 1080, 20000000)
         }
         return paramList
     }
 
+    private fun sendGet(): String {
+        val client = OkHttpClient()
+        val url = URL("http://130.245.144.153/count")
+        val request = Request.Builder()
+            .url(url)
+            .get()
+            .build()
+
+        val response = client.newCall(request).execute()
+        return response.body!!.string()
+    }
+    private fun getUrl(vidNum: Int): Pair<String, Int> {
+        var url = ""
+        if(vidNum in 0..19){
+            url = "static/"
+            if(vidNum in 0..3){
+                url += "static_0/static.mpd"
+            }else if(vidNum in 4..7){
+                url += "static_1/static.mpd"
+            }else if(vidNum in 8..11){
+                url += "static_2/static.mpd"
+            }else if(vidNum in 12..15){
+                url += "static_3/static.mpd"
+            }else if(vidNum in 16..19){
+                url += "static_4/static.mpd"
+            }
+        }else{
+            url = "dynamic/"
+            if(vidNum in 20..23){
+                url += "dynamic_0/dynamic.mpd"
+            }else if(vidNum in 24..27){
+                url += "dynamic_1/dynamic.mpd"
+            }else if(vidNum in 28..31){
+                url += "dynamic_2/dynamic.mpd"
+            }else if(vidNum in 32..35){
+                url += "dynamic_3/dynamic.mpd"
+            }else if(vidNum in 36..39){
+                url += "dynamic_4dynamic.mpd/"
+            }
+        }
+        var resNum = vidNum%4
+        var resType = 0
+        when(resNum){
+            0 -> resType = 240
+            1 -> resType = 480
+            2 -> resType = 720
+            3 -> resType = 1080
+        }
+        return Pair(url, resType)
+    }
 }

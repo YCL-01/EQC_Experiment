@@ -9,11 +9,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.app.Activity
-import android.widget.EditText
-import kotlinx.android.synthetic.main.activity_survey.*
-import java.io.File
-import java.util.Random
-
 
 
 
@@ -21,17 +16,8 @@ import java.util.Random
 
 class MainActivity : AppCompatActivity() {
 
-    // Count
-    companion object{
-
-        var Count : Int = 0
-    }
     // User Info
     var name: String = ""
-
-    //Sample video
-    private var resolution : Int = 0
-    private var vidType : String = ""
 
     //Check Storage Permissions
     private val REQUEST_EXTERNAL_STORAGE: Int = 1
@@ -47,48 +33,15 @@ class MainActivity : AppCompatActivity() {
         verifyWriteStoragePermissions(this)
         verifyReadStoragePermissions(this)
 
-        //OPTION 1
 
-        resolGp.setOnCheckedChangeListener { group, checkedId ->
-            if(checkedId==R.id.chk_240) {
-                resolution = 240
-            }else if(checkedId==R.id.chk_480) {
-                resolution = 480
-            }else if(checkedId==R.id.chk_720) {
-                resolution = 720
-            }else if(checkedId==R.id.chk_1080) {
-                resolution = 1080
-            }
+        btn_start.setOnClickListener{
+            var name = nameInput.text.toString()
+            var playerIntent = Intent(this, PlayerActivity::class.java)
+            playerIntent.putExtra("name", name)
+            startActivity(playerIntent)
         }
-        TypeGp.setOnCheckedChangeListener { group, checkedId ->
-            if(checkedId==R.id.chk_dynamic) {
-                vidType = "dynamic"
-                var playerIntent = Intent(this, PlayerActivity::class.java)
-                playerIntent.putExtra("value", resolution)
-                playerIntent.putExtra("type", vidType)
-                btn_start.setOnClickListener{
-                    setName()
-                    startActivity(playerIntent)
-                }
-            }else if(checkedId==R.id.chk_static) {
-                vidType = "static"
-                var playerIntent = Intent(this, PlayerActivity::class.java)
-                playerIntent.putExtra("value", resolution)
-                playerIntent.putExtra("type", vidType)
-                btn_start.setOnClickListener {
-                    setName()
-                    startActivity(playerIntent)
-                }
-            }
-        }
+    }
 
-    }
-    fun setName(){
-        name = name3.text.toString()
-    }
-    fun retName(): String {
-        return name
-    }
 
     fun verifyWriteStoragePermissions(activity: Activity?) {
         // Check if we have write permission
