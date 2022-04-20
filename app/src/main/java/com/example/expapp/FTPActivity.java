@@ -34,10 +34,10 @@ public class FTPActivity extends Activity{
 
     private MainActivity mainActivity = new MainActivity();
 
-    static final String FTP_HOST= "115.85.180.227";
-    static final String FTP_USER = "ftpuser";
-    static final String FTP_PASS  ="wings";
-    static final int FTP_PORT = 10050;
+    static final String FTP_HOST= 
+    static final String FTP_USER = 
+    static final String FTP_PASS  =
+    static final int FTP_PORT = 
     String TAG="FTPLog";
 
     String accFileName = "acc.csv";
