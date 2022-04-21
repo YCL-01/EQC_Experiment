@@ -9,12 +9,17 @@ import kotlinx.android.synthetic.main.activity_main.*
 import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.app.Activity
-
+import kotlin.properties.Delegates
 
 
 // Main - Player(+Listener) - Info
 
 class MainActivity : AppCompatActivity() {
+
+    //Check Trial
+    companion object{
+        public var Trial: Int = 0
+    }
 
     //Check Storage Permissions
     private val REQUEST_EXTERNAL_STORAGE: Int = 1
@@ -68,5 +73,6 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
+
 
 }

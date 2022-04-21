@@ -29,10 +29,9 @@ import com.example.expapp.R;
 
 import java.util.Random;
 import java.util.TimeZone;
+import com.example.expapp.MainActivity;
 
 public class FTPActivity extends Activity{
-
-    private MainActivity mainActivity = new MainActivity();
 
     static final String FTP_HOST =
     static final String FTP_USER =
@@ -47,12 +46,18 @@ public class FTPActivity extends Activity{
     String userName = null;
     Handler handler = new Handler();
 
+    /*
+     * Has Done
+     * 설문자 이름으로 폴더 생성까지 확인 함
+     * TODO
+     * 시도 횟수 별로 생성하는거 해야함
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         String playerName = intent.getStringExtra("name");
-        Integer trial = intent.getIntExtra("trial");
+        Integer trial = intent.getIntExtra("trial", MainActivity.Companion.getTrial());
         // Need Change the PlayerName
         //String playerName = mainActivity.retName();
         System.out.println("playerName : "+playerName);

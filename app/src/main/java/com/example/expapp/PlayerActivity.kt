@@ -26,9 +26,9 @@ import android.os.Environment
 import androidx.core.content.FileProvider
 import com.google.android.exoplayer2.Player
 import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import okhttp3.*
 import java.io.File
+import java.io.IOException
 import java.net.URL
 import java.util.ArrayList
 
@@ -84,7 +84,7 @@ class PlayerActivity : AppCompatActivity(){
         userName = intent.getStringExtra("name").toString()// MainActivity에서 받음
         trial = intent.getIntExtra("trial", 0)// FTPActivity에서 받음
         trial += 1 // playerActivity 실행때마다 더해줌
-        vidNum = sendGet().toInt() // node server 통신
+        vidNum = sendGet() // node server 통신
         var (url, vid, res) = getUrl(vidNum) // vidNum에 따라서 url, resolution 정보 구분
         dashURL = baseURL + url
         vidType = vid
@@ -229,21 +229,34 @@ class PlayerActivity : AppCompatActivity(){
         }
         return paramList
     }
-
-    private fun sendGet(): String {
+    /* Has Done
+     * sendGet 함수 작성 완료
+     * TODO
+     * 영상 아무거나 대충 40개 경로 맞춰서 넣고 테스트 해야함
+     */
+    private fun sendGet(): Int {
         val client = OkHttpClient()
-        val url = URL("http://130.245.144.153/count")
+        val url = URL("http://130.245.144.153:5000/count")
         val request = Request.Builder()
             .url(url)
             .get()
             .build()
+        var tmpVidNum = 0
+        val response = client.newCall(request).enqueue( object: Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                println("Error")
+            }
 
-        val response = client.newCall(request).execute()
-        return response.body!!.string()
+            override fun onResponse(call: Call, response: Response) {
+                tmpVidNum = (response?.body?.string()?.toInt() ?: Int) as Int
+            }
+
+        })
+        return tmpVidNum
     }
 
     private fun getUrl(vidNum: Int): Triple<String, String, Int> {
-        var url = ""
+        var url = "http://130.245.144.153:5000/video/"
         var vid = ""
         if(vidNum in 0..19){
             url = "static/"
