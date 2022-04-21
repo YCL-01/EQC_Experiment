@@ -33,10 +33,11 @@ import com.example.expapp.MainActivity;
 
 public class FTPActivity extends Activity{
 
-    static final String FTP_HOST =
-    static final String FTP_USER =
-    static final String FTP_PASS  =
-    static final int FTP_PORT =
+    static final String FTP_HOST= "115.85.180.227";
+    static final String FTP_USER = "ftpuser";
+    static final String FTP_PASS  ="wings";
+    static final int FTP_PORT = 10050;
+
     String TAG="FTPLog";
 
     String accFileName = "acc.csv";
@@ -56,14 +57,22 @@ public class FTPActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        String playerName = intent.getStringExtra("name");
-        Integer trial = intent.getIntExtra("trial", MainActivity.Companion.getTrial());
+        String playerName = MainActivity.Companion.getUserName();//intent.getStringExtra("name");
         // Need Change the PlayerName
         //String playerName = mainActivity.retName();
         System.out.println("playerName : "+playerName);
         userName = playerName;
+
         NThread nThread = new NThread();
         nThread.start();
+        //moveTaskToBack(true);
+        //finishAndRemoveTask();
+        //android.os.Process.killProcess(android.os.Process.myPid());
+
+        intent = new Intent(this, SubActivity.class);
+        intent.putExtra("userName", playerName);
+        startActivity(intent);
+        finish();
     }
 
     class NThread extends Thread{
@@ -80,13 +89,12 @@ public class FTPActivity extends Activity{
             } catch (FTPException e) {
                 e.printStackTrace();
             }
-            moveTaskToBack(true);
-            finishAndRemoveTask();
-            android.os.Process.killProcess(android.os.Process.myPid());
+
+
         }
         public void upload() throws FTPIllegalReplyException, IOException, FTPException {
             String files[] = {accFileName,gyroFileName,lightFileName,surveyFileName};
-            String dirName = userName;
+            String dirName = userName+"_"+(SubActivity.Companion.getTrial());
 
             FTPClient client = new FTPClient();
             client.connect(FTP_HOST,FTP_PORT);
@@ -96,9 +104,13 @@ public class FTPActivity extends Activity{
 
             Log.d(TAG,"log-in");
             client.changeDirectory("ftp/upload");
-            client.createDirectory(dirName);
+            try{
+                client.createDirectory(dirName);
+            } catch(Exception e){
+
+            }
             client.changeDirectory(dirName);
-            //client.changeDirectory(dirName);
+            System.out.println( "dirName " + dirName);
 
             for(int i = 0; i<4; i++)
             {

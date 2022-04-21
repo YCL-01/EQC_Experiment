@@ -45,7 +45,7 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         resVal = intent.getIntExtra("resVal", 720)
         vidType = intent.getStringExtra("vidType").toString()
         trial = intent.getIntExtra("trial", 0)
-        userName = intent.getStringExtra("name").toString()
+        userName = SubActivity.userName //intent.getStringExtra("name").toString()
 
 
         //Select Age
@@ -101,16 +101,5 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         println("Rating: $score")
     }
 
-    private fun sendGet(): String {
-        val client = OkHttpClient()
-        val url = URL("http://130.245.144.153/count")
-        val request = Request.Builder()
-            .url(url)
-            .get()
-            .build()
-
-        val response = client.newCall(request).execute()
-        return response.body!!.string()
-    }
 
 }

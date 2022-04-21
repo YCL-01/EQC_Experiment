@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     //Check Trial
     companion object{
         public var Trial: Int = 0
+        var userName: String = ""
     }
 
     //Check Storage Permissions
@@ -35,9 +36,9 @@ class MainActivity : AppCompatActivity() {
         verifyWriteStoragePermissions(this)
         verifyReadStoragePermissions(this)
 
-
+        println("MainActivity Trial : "+ Trial)
         btn_start.setOnClickListener{
-            var userName = nameInput.text.toString()
+            userName = nameInput.text.toString()
             var playerIntent = Intent(this, PlayerActivity::class.java)
             playerIntent.putExtra("name", userName)
             startActivity(playerIntent)

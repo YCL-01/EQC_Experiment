@@ -21,6 +21,9 @@
             android:name=".FTPActivity"
             android:exported="false" />
         <activity
+            android:name=".SubActivity"
+            android:exported="true" />
+        <activity
             android:name=".SurveyActivity"
             android:exported="false" />
         <meta-data

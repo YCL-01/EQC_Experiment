@@ -1,36 +1,31 @@
 package com.example.expapp
 
+
+import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorManager
-
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import com.example.expapp.SubActivity.Companion.Trial
 import com.example.expapp.sensors.AccelerometerListener
 import com.example.expapp.sensors.GyroscopeListener
 import com.example.expapp.sensors.LightSensorListener
-
-
-import kotlinx.android.synthetic.main.activity_player.*
-import android.content.Context
-import android.net.Uri
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.dash.DashMediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.Util
-import android.content.Intent
-import android.os.Environment
-import androidx.core.content.FileProvider
-import com.google.android.exoplayer2.Player
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_player.*
 import okhttp3.*
 import java.io.File
 import java.io.IOException
 import java.net.URL
-import java.util.ArrayList
 
 
 class PlayerActivity : AppCompatActivity(){
@@ -77,13 +72,18 @@ class PlayerActivity : AppCompatActivity(){
 
     //initialize event listeners
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(Trial>=3)
+        {
+            ActivityCompat.finishAffinity(this)
+            System.exit(0)
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
         // Video initialize
         userName = intent.getStringExtra("name").toString()// MainActivity에서 받음
-        trial = intent.getIntExtra("trial", 0)// FTPActivity에서 받음
-        trial += 1 // playerActivity 실행때마다 더해줌
+        trial = SubActivity.Trial //intent.getIntExtra("trial", 0)// FTPActivity에서 받음
+        //trial += 1 // playerActivity 실행때마다 더해줌
         vidNum = sendGet() // node server 통신
         var (url, vid, res) = getUrl(vidNum) // vidNum에 따라서 url, resolution 정보 구분
         dashURL = baseURL + url
