@@ -17,8 +17,8 @@ class SubActivity : AppCompatActivity() {
 
     //Check Trial
     companion object{
-        public var Trial: Int = MainActivity.Trial
-        public var userName: String = MainActivity.userName
+        //public var Trial: Int = MainActivity.Trial
+        //public var userName: String = MainActivity.userName
     }
 
     //Check Storage Permissions
@@ -35,18 +35,18 @@ class SubActivity : AppCompatActivity() {
         verifyWriteStoragePermissions(this)
         verifyReadStoragePermissions(this)
 
-        println("SubActivity Trial : "+ Trial)
-        println("SubActivity userName : "+ userName)
+        println("SubActivity Trial : "+ MainActivity.Trial)
+        println("SubActivity userName : "+ MainActivity.userName)
 
-        if(Trial>=3)
+        if(MainActivity.Trial>=2)
         {
             ActivityCompat.finishAffinity(this)
             System.exit(0)
         }
         btn_start.setOnClickListener{
             var playerIntent = Intent(this, PlayerActivity::class.java)
-            playerIntent.putExtra("name", userName)
-            Trial++
+            playerIntent.putExtra("name", MainActivity.userName)
+            MainActivity.Trial++
             startActivity(playerIntent)
         }
 

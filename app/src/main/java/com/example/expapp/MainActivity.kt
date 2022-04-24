@@ -9,17 +9,32 @@ import kotlinx.android.synthetic.main.activity_main.*
 import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.app.Activity
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.RadioButton
+import android.widget.Spinner
 import kotlin.properties.Delegates
 
 
 // Main - Player(+Listener) - Info
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    //Survey Data
+    //private var age: String? = null
+    //private var sex: String? = null
+    private var score = 0.0
+    private var resVal = 0
+    private var vidType = ""
+    private var trial = 0
 
     //Check Trial
     companion object{
         public var Trial: Int = 0
         var userName: String = ""
+        var age: String? = null
+        var sex: String? = null
     }
 
     //Check Storage Permissions
@@ -36,6 +51,15 @@ class MainActivity : AppCompatActivity() {
         verifyWriteStoragePermissions(this)
         verifyReadStoragePermissions(this)
 
+        val spinner = findViewById<View>(R.id.spinner) as Spinner
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.ages, android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+        spinner.setOnItemSelectedListener(this)
+
         println("MainActivity Trial : "+ Trial)
         btn_start.setOnClickListener{
             userName = nameInput.text.toString()
@@ -44,7 +68,22 @@ class MainActivity : AppCompatActivity() {
             startActivity(playerIntent)
         }
     }
+    fun onRadioButtonClicked(view: View) {
+        val checked = (view as RadioButton).isChecked
+        when (view.getId()) {
+            R.id.maleButton -> if (checked) sex = "Male"
+            R.id.femalebutton -> if (checked) sex = "Female"
+        }
+        println("Sex: $sex")
+    }
+    override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+        age = parent.getItemAtPosition(pos).toString()
+        println("age: $age")
+    }
 
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+    }
 
     fun verifyWriteStoragePermissions(activity: Activity?) {
         // Check if we have write permission

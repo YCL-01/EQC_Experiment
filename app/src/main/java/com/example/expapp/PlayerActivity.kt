@@ -9,7 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.example.expapp.SubActivity.Companion.Trial
+import com.example.expapp.MainActivity.Companion.Trial
 import com.example.expapp.sensors.AccelerometerListener
 import com.example.expapp.sensors.GyroscopeListener
 import com.example.expapp.sensors.LightSensorListener
@@ -82,7 +82,7 @@ class PlayerActivity : AppCompatActivity(){
 
         // Video initialize
         userName = intent.getStringExtra("name").toString()// MainActivity에서 받음
-        trial = SubActivity.Trial //intent.getIntExtra("trial", 0)// FTPActivity에서 받음
+        trial = Trial //intent.getIntExtra("trial", 0)// FTPActivity에서 받음
         //trial += 1 // playerActivity 실행때마다 더해줌
         vidNum = sendGet() // node server 통신
         var (url, vid, res) = getUrl(vidNum) // vidNum에 따라서 url, resolution 정보 구분

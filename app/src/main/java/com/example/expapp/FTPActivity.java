@@ -33,10 +33,10 @@ import com.example.expapp.MainActivity;
 
 public class FTPActivity extends Activity{
 
-    static final String FTP_HOST=
-    static final String FTP_USER =
-    static final String FTP_PASS
-    static final int FTP_PORT =
+    static final String FTP_HOST =
+    static final String FTP_USER = ;
+    static final String FTP_PASS = ;
+    static final int FTP_PORT = ;
 
     String TAG="FTPLog";
 
@@ -94,7 +94,7 @@ public class FTPActivity extends Activity{
         }
         public void upload() throws FTPIllegalReplyException, IOException, FTPException {
             String files[] = {accFileName,gyroFileName,lightFileName,surveyFileName};
-            String dirName = userName+"_"+(SubActivity.Companion.getTrial());
+            String dirName = userName+"_"+(MainActivity.Companion.getTrial());
 
             FTPClient client = new FTPClient();
             client.connect(FTP_HOST,FTP_PORT);

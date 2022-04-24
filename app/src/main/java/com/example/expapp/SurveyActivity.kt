@@ -15,7 +15,7 @@ import java.io.FileOutputStream
 import java.net.URL
 
 class SurveyActivity : AppCompatActivity(), View.OnClickListener,
-    RatingBar.OnRatingBarChangeListener, AdapterView.OnItemSelectedListener {
+    RatingBar.OnRatingBarChangeListener {
 
     //Survey Data
     private var age: String? = null
@@ -45,32 +45,37 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         resVal = intent.getIntExtra("resVal", 720)
         vidType = intent.getStringExtra("vidType").toString()
         trial = intent.getIntExtra("trial", 0)
-        userName = SubActivity.userName //intent.getStringExtra("name").toString()
-
+        userName = MainActivity.userName //intent.getStringExtra("name").toString()
+        age = MainActivity.age
+        sex = MainActivity.sex
 
         //Select Age
+        /*
         val spinner = findViewById<View>(R.id.spinner) as Spinner
         val adapter = ArrayAdapter.createFromResource(
             this,
             R.array.ages, android.R.layout.simple_spinner_item
         )
+        */
+        /*
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
         spinner.setOnItemSelectedListener(this)
-
+        */
         //Extract Rating
         val ratingBar = findViewById<View>(R.id.ratingBar) as RatingBar
         ratingBar.setOnRatingBarChangeListener(this)
 
-        // Send Email
+        // Send to Server
         val finish = findViewById<View>(R.id.finishButton) as Button
         finish.setOnClickListener(this)
     }
-
+    /*
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         age = parent.getItemAtPosition(pos).toString()
         println("age: $age")
     }
+    */
 
     override fun onClick(v: View?) {
         var fileName: String = "surveyData.txt"
@@ -84,7 +89,7 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         nextIntent.putExtra("trial", userName)
         startActivity(nextIntent)
     }
-
+    /*
     fun onRadioButtonClicked(view: View) {
         val checked = (view as RadioButton).isChecked
         when (view.getId()) {
@@ -93,8 +98,8 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         }
         println("Sex: $sex")
     }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
+    */
+    // override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onRatingChanged(ratingBar: RatingBar, rating: Float, fromUser: Boolean) {
         score = ratingBar.rating.toDouble()

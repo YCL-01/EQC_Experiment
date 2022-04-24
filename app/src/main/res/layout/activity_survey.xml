@@ -32,7 +32,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.568" />
+        app:layout_constraintVertical_bias="0.411" />
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.668" />
+        app:layout_constraintVertical_bias="0.495" />
 
     <Button
         android:id="@+id/finishButton"
@@ -57,74 +57,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.859" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="152dp"
-        android:layout_height="87dp"
-        android:layout_marginTop="104dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.432"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.055" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="266dp"
-        android:layout_height="87dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.375"
-        app:layout_constraintStart_toEndOf="@+id/Sex"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.402">
-
-        <RadioButton
-            android:id="@+id/femalebutton"
-            android:layout_width="132dp"
-            android:layout_height="87dp"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/Female" />
-
-        <RadioButton
-            android:id="@+id/maleButton"
-            android:layout_width="132dp"
-            android:layout_height="87dp"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/Male" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/Sex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:text="Gender"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.325" />
-
-    <TextView
-        android:id="@+id/Age"
-        android:layout_width="57dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="120dp"
-        android:text="@string/Age"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.068" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
