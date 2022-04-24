@@ -15,12 +15,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class SubActivity : AppCompatActivity() {
 
-    //Check Trial
-    companion object{
-        //public var Trial: Int = MainActivity.Trial
-        //public var userName: String = MainActivity.userName
-    }
-
     //Check Storage Permissions
     private val REQUEST_EXTERNAL_STORAGE: Int = 1
     private val PERMISSIONS_STORAGE = arrayOf<String>(
@@ -35,21 +29,15 @@ class SubActivity : AppCompatActivity() {
         verifyWriteStoragePermissions(this)
         verifyReadStoragePermissions(this)
 
-        println("SubActivity Trial : "+ MainActivity.Trial)
-        println("SubActivity userName : "+ MainActivity.userName)
+        println("Trial : "+ MainActivity.Trial)
+        println("userName : "+ MainActivity.userName)
 
-        if(MainActivity.Trial>=2)
-        {
-            ActivityCompat.finishAffinity(this)
-            System.exit(0)
-        }
         btn_start.setOnClickListener{
             var playerIntent = Intent(this, PlayerActivity::class.java)
             playerIntent.putExtra("name", MainActivity.userName)
             MainActivity.Trial++
             startActivity(playerIntent)
         }
-
     }
 
 
@@ -81,6 +69,4 @@ class SubActivity : AppCompatActivity() {
             )
         }
     }
-
-
 }

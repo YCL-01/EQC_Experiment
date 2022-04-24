@@ -3,40 +3,23 @@ package com.example.expapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import it.sauronsoftware.ftp4j.FTPClient;
 import it.sauronsoftware.ftp4j.FTPDataTransferListener;
 import it.sauronsoftware.ftp4j.FTPException;
 import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
 
-import com.example.expapp.SurveyActivity;
-import com.example.expapp.R;
-
-import java.util.Random;
-import java.util.TimeZone;
-import com.example.expapp.MainActivity;
-
 public class FTPActivity extends Activity{
 
     static final String FTP_HOST =
-    static final String FTP_USER = ;
-    static final String FTP_PASS = ;
-    static final int FTP_PORT = ;
+    static final String FTP_USER =
+    static final String FTP_PASS =
+    static final int FTP_PORT =
 
     String TAG="FTPLog";
 
@@ -47,27 +30,28 @@ public class FTPActivity extends Activity{
     String userName = null;
     Handler handler = new Handler();
 
-    /*
-     * Has Done
-     * 설문자 이름으로 폴더 생성까지 확인 함
-     * TODO
-     * 시도 횟수 별로 생성하는거 해야함
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        String playerName = MainActivity.Companion.getUserName();//intent.getStringExtra("name");
-        // Need Change the PlayerName
-        //String playerName = mainActivity.retName();
+        String playerName = MainActivity.Companion.getUserName();
+
         System.out.println("playerName : "+playerName);
         userName = playerName;
 
         NThread nThread = new NThread();
         nThread.start();
-        //moveTaskToBack(true);
-        //finishAndRemoveTask();
-        //android.os.Process.killProcess(android.os.Process.myPid());
+        try {
+            nThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(MainActivity.Companion.getTrial()>=MainActivity.Companion.getTotal())
+        {
+            moveTaskToBack(true);
+            finishAndRemoveTask();
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
 
         intent = new Intent(this, SubActivity.class);
         intent.putExtra("userName", playerName);
@@ -89,8 +73,6 @@ public class FTPActivity extends Activity{
             } catch (FTPException e) {
                 e.printStackTrace();
             }
-
-
         }
         public void upload() throws FTPIllegalReplyException, IOException, FTPException {
             String files[] = {accFileName,gyroFileName,lightFileName,surveyFileName};

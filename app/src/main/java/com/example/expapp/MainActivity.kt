@@ -21,20 +21,13 @@ import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    //Survey Data
-    //private var age: String? = null
-    //private var sex: String? = null
-    private var score = 0.0
-    private var resVal = 0
-    private var vidType = ""
-    private var trial = 0
-
-    //Check Trial
+    //Check Trial & Servey Data
     companion object{
         public var Trial: Int = 0
         var userName: String = ""
         var age: String? = null
         var sex: String? = null
+        var Total: Int = 3 // 반복할 횟수
     }
 
     //Check Storage Permissions
@@ -65,6 +58,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             userName = nameInput.text.toString()
             var playerIntent = Intent(this, PlayerActivity::class.java)
             playerIntent.putExtra("name", userName)
+            Trial++
             startActivity(playerIntent)
         }
     }

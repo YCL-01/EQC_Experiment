@@ -72,18 +72,13 @@ class PlayerActivity : AppCompatActivity(){
 
     //initialize event listeners
     override fun onCreate(savedInstanceState: Bundle?) {
-        if(Trial>=3)
-        {
-            ActivityCompat.finishAffinity(this)
-            System.exit(0)
-        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
         // Video initialize
         userName = intent.getStringExtra("name").toString()// MainActivity에서 받음
         trial = Trial //intent.getIntExtra("trial", 0)// FTPActivity에서 받음
-        //trial += 1 // playerActivity 실행때마다 더해줌
         vidNum = sendGet() // node server 통신
         var (url, vid, res) = getUrl(vidNum) // vidNum에 따라서 url, resolution 정보 구분
         dashURL = baseURL + url
