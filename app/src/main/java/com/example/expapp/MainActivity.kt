@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         var userName: String = ""
         var age: String? = null
         var sex: String? = null
-        var Total: Int = 3 // 반복할 횟수
+        var Total: Int = 10 // 반복할 횟수
     }
 
     //Check Storage Permissions
