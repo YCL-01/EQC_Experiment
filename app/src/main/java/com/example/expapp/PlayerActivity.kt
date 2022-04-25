@@ -288,7 +288,7 @@ class PlayerActivity : AppCompatActivity(){
                 vidPathUrl += "dynamic_3/dynamic.mpd"
                 vid = "dynamic_0"
             }else if(trial == 9){
-                vidPathUrl += "dynamic_4dynamic.mpd/"
+                vidPathUrl += "dynamic_4/dynamic.mpd/"
                 vid = "dynamic_0"
             }
         }
