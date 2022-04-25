@@ -23,7 +23,9 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.Util
 import kotlinx.android.synthetic.main.activity_player.*
 import okhttp3.*
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.util.Random
 import java.io.IOException
 import java.net.URL
 
@@ -33,7 +35,7 @@ class PlayerActivity : AppCompatActivity(){
     private var resVal = 0
     private var trial = 0
     private var vidNum = 0
-    private var vidType = ""
+    private var vidName = ""
     private var userName = ""
 
     //Sensor file names
@@ -60,7 +62,6 @@ class PlayerActivity : AppCompatActivity(){
     private var currentWindow = 0
     private var playbackPosition = 0L
     private var dashURL = ""
-    private var baseURL = "http://130.245.144.153:5000/video/"
 
     //hasStartedWriting file
     var hasStartedWriting = false
@@ -79,12 +80,11 @@ class PlayerActivity : AppCompatActivity(){
         // Video initialize
         userName = intent.getStringExtra("name").toString()// MainActivity에서 받음
         trial = Trial //intent.getIntExtra("trial", 0)// FTPActivity에서 받음
-        vidNum = sendGet() // node server 통신
-        var (url, vid, res) = getUrl(vidNum) // vidNum에 따라서 url, resolution 정보 구분
-        dashURL = baseURL + url
-        vidType = vid
+        //vidNum = sendPost(userName) // node server 통신
+        var (url, vidInfo, res) = getUrl(trial) // vidNum에 따라서 url, resolution 정보 구분
+        dashURL = url
+        vidName = vidInfo
         resVal = res
-
         context = this;
 
         //Initialize files
@@ -125,7 +125,6 @@ class PlayerActivity : AppCompatActivity(){
         sensorManager!!.registerListener(lightSensorListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
         initPlayer()
         val eventListener : Player.Listener
-        var videoIndex = 0
         eventListener = object: Player.Listener {
             override fun onPlayerStateChanged(playWhenReady: Boolean, playBackState: Int) {
                 if (playBackState == Player.STATE_ENDED) {
@@ -164,7 +163,7 @@ class PlayerActivity : AppCompatActivity(){
 
         val goToSurvey = Intent(this, SurveyActivity::class.java)
         goToSurvey.putExtra("resVal", resVal)
-        goToSurvey.putExtra("vidType", vidType)
+        goToSurvey.putExtra("vidType", vidName)
         goToSurvey.putExtra("trial", trial)
         goToSurvey.putExtra("name", userName)
         startActivity(goToSurvey)
@@ -229,9 +228,11 @@ class PlayerActivity : AppCompatActivity(){
      * TODO
      * 영상 아무거나 대충 40개 경로 맞춰서 넣고 테스트 해야함
      */
-    private fun sendGet(): Int {
+    /*
+    private fun sendPost(userName: String): Int {
         val client = OkHttpClient()
-        val url = URL("http://130.245.144.153:5000/count")
+        val url = URL("http://101.250.30.99:5000/count")
+        val postBody = userName.trimMargin()
         val request = Request.Builder()
             .url(url)
             .get()
@@ -248,49 +249,50 @@ class PlayerActivity : AppCompatActivity(){
 
         })
         return tmpVidNum
-    }
+    }*/
 
-    private fun getUrl(vidNum: Int): Triple<String, String, Int> {
-        var url = "http://130.245.144.153:5000/video/"
+    private fun getUrl(trial: Int): Triple<String, String, Int> {
+        var vidPathUrl = ""
+        val range = (0..3)
         var vid = ""
-        if(vidNum in 0..19){
-            url = "static/"
-            if(vidNum in 0..3){
-                url += "static_0/static.mpd"
+        if(trial%2 == 0){
+            vidPathUrl += "static/"
+            if(trial == 2){
+                vidPathUrl += "static_0/static.mpd"
                 vid = "static_0"
-            }else if(vidNum in 4..7){
-                url += "static_1/static.mpd"
+            }else if(trial == 4){
+                vidPathUrl += "static_1/static.mpd"
                 vid = "static_1"
-            }else if(vidNum in 8..11){
-                url += "static_2/static.mpd"
+            }else if(trial == 6){
+                vidPathUrl += "static_2/static.mpd"
                 vid = "static_2"
-            }else if(vidNum in 12..15){
-                url += "static_3/static.mpd"
+            }else if(trial == 8){
+                vidPathUrl += "static_3/static.mpd"
                 vid = "static_3"
-            }else if(vidNum in 16..19){
-                url += "static_4/static.mpd"
+            }else if(trial == 10){
+                vidPathUrl += "static_4/static.mpd"
                 vid = "static_4"
             }
         }else{
-            url = "dynamic/"
-            if(vidNum in 20..23){
-                url += "dynamic_0/dynamic.mpd"
+            vidPathUrl += "dynamic/"
+            if(trial == 1){
+                vidPathUrl += "dynamic_0/dynamic.mpd"
                 vid = "dynamic_0"
-            }else if(vidNum in 24..27){
-                url += "dynamic_1/dynamic.mpd"
+            }else if(trial == 3){
+                vidPathUrl += "dynamic_1/dynamic.mpd"
                 vid = "dynamic_1"
-            }else if(vidNum in 28..31){
-                url += "dynamic_2/dynamic.mpd"
+            }else if(trial == 5){
+                vidPathUrl += "dynamic_2/dynamic.mpd"
                 vid = "dynamic_0"
-            }else if(vidNum in 32..35){
-                url += "dynamic_3/dynamic.mpd"
+            }else if(trial == 7){
+                vidPathUrl += "dynamic_3/dynamic.mpd"
                 vid = "dynamic_0"
-            }else if(vidNum in 36..39){
-                url += "dynamic_4dynamic.mpd/"
+            }else if(trial == 9){
+                vidPathUrl += "dynamic_4dynamic.mpd/"
                 vid = "dynamic_0"
             }
         }
-        var resNum = vidNum%4
+        var resNum = range.random()
         var resType = 0
         when(resNum){
             0 -> resType = 240
@@ -298,6 +300,7 @@ class PlayerActivity : AppCompatActivity(){
             2 -> resType = 720
             3 -> resType = 1080
         }
-        return Triple(url, vid, resType)
+
+        return Triple(vidPathUrl, vid, resType)
     }
 }
