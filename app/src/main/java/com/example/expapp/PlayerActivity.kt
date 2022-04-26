@@ -252,7 +252,8 @@ class PlayerActivity : AppCompatActivity(){
     }*/
 
     private fun getUrl(trial: Int): Triple<String, String, Int> {
-        var vidPathUrl = ""
+        //var vidPathUrl = "http://101.250.30.99:5000/video/"
+        var vidPathUrl = "http://130.245.144.153:5000/video/"
         val range = (0..3)
         var vid = ""
         if(trial%2 == 0){
@@ -288,7 +289,7 @@ class PlayerActivity : AppCompatActivity(){
                 vidPathUrl += "dynamic_3/dynamic.mpd"
                 vid = "dynamic_0"
             }else if(trial == 9){
-                vidPathUrl += "dynamic_4dynamic.mpd/"
+                vidPathUrl += "dynamic_4/dynamic.mpd"
                 vid = "dynamic_0"
             }
         }
