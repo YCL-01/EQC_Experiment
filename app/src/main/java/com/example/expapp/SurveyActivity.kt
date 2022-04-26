@@ -4,15 +4,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.util.Log
 import android.view.View
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_survey.*
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.io.FileOutputStream
-import java.net.URL
+import android.util.DisplayMetrics
 
 class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     RatingBar.OnRatingBarChangeListener {
@@ -51,8 +46,13 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onClick(v: View?) {
+        var displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        var width = displayMetrics.widthPixels
+        var height = displayMetrics.heightPixels
+
         var fileName: String = "surveyData.txt"
-        var dataToWrite: String = "Age: $age\nSex: $sex\nRating: $score\nResolution: $resVal\nVideo: $vidType"
+        var dataToWrite: String = "Age: $age\nSex: $sex\nRating: $score\nResolution: $resVal\nVideo: $vidType\nDisplaySize: $width x $height"
         var outputFile : FileOutputStream = openFileOutput(fileName, MODE_PRIVATE)
         outputFile.write(dataToWrite.toByteArray())	//memo : String DATA
         outputFile.close()
