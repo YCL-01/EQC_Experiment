@@ -16,10 +16,10 @@ import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
 
 public class FTPActivity extends Activity{
 
-    static final String FTP_HOST = "115.85.180.227";
-    static final String FTP_USER = "ftpuser";
-    static final String FTP_PASS = "wings";
-    static final int FTP_PORT = 10050;
+    static final String FTP_HOST = ;
+    static final String FTP_USER = ;
+    static final String FTP_PASS = ;
+    static final int FTP_PORT = ;
 
     String TAG="FTPLog";
 
@@ -85,6 +85,7 @@ public class FTPActivity extends Activity{
             client.setPassive(true);
 
             Log.d(TAG,"log-in");
+            //client.changeDirectory("/");
             client.changeDirectory("ftp/upload");
             try{
                 client.createDirectory(dirName);

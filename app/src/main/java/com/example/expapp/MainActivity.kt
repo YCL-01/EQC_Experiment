@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         spinner.setOnItemSelectedListener(this)
 
         println("MainActivity Trial : "+ Trial)
+
         btn_start.setOnClickListener{
             userName = nameInput.text.toString()
             var playerIntent = Intent(this, PlayerActivity::class.java)
