@@ -284,13 +284,13 @@ class PlayerActivity : AppCompatActivity(){
                 vid = "dynamic_1"
             }else if(trial == 5){
                 vidPathUrl += "dynamic_2/dynamic.mpd"
-                vid = "dynamic_0"
+                vid = "dynamic_2"
             }else if(trial == 7){
                 vidPathUrl += "dynamic_3/dynamic.mpd"
-                vid = "dynamic_0"
+                vid = "dynamic_3"
             }else if(trial == 9){
                 vidPathUrl += "dynamic_4/dynamic.mpd"
-                vid = "dynamic_0"
+                vid = "dynamic_4"
             }
         }
         var resNum = range.random()
