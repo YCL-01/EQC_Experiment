@@ -15,6 +15,7 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     //Survey Data
     private var age: String? = null
     private var sex: String? = null
+    private var time: String? = null
     private var score = 0.0
     private var resVal = 0
     private var vidType = ""
@@ -35,6 +36,7 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         userName = MainActivity.userName //intent.getStringExtra("name").toString()
         age = MainActivity.age
         sex = MainActivity.sex
+        time = MainActivity.light
 
         //Extract Rating
         val ratingBar = findViewById<View>(R.id.ratingBar) as RatingBar
@@ -60,6 +62,7 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         val nextIntent = Intent(this, FTPActivity::class.java)
         nextIntent.putExtra("name", userName)
         nextIntent.putExtra("trial", userName)
+        nextIntent.putExtra("time", time)
         startActivity(nextIntent)
     }
 

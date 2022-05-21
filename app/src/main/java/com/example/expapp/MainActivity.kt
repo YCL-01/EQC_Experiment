@@ -21,12 +21,13 @@ import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    //Check Trial & Servey Data
+    //Check Trial & Survey Data
     companion object{
         public var Trial: Int = 0
         var userName: String = ""
         var age: String? = null
         var sex: String? = null
+        var light: String? = null
         var Total: Int = 10 // 반복할 횟수
     }
 
@@ -69,8 +70,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             R.id.maleButton -> if (checked) sex = "Male"
             R.id.femalebutton -> if (checked) sex = "Female"
         }
+        when (view.getId()) {
+            R.id.btnDay -> if (checked) light = "Day"
+            R.id.btnNight -> if (checked) light = "Night"
+        }
         println("Sex: $sex")
+        println("Light: $light")
     }
+
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         age = parent.getItemAtPosition(pos).toString()
         println("age: $age")

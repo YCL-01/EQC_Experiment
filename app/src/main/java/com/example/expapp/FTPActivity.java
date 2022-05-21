@@ -18,8 +18,8 @@ public class FTPActivity extends Activity{
 
     static final String FTP_HOST = ;
     static final String FTP_USER = ;
-    static final String FTP_PASS =;
-    static final int FTP_PORT =;
+    static final String FTP_PASS = ;
+    static final int FTP_PORT = ;
 
     String TAG="FTPLog";
 
@@ -28,6 +28,7 @@ public class FTPActivity extends Activity{
     String lightFileName = "light.csv";
     String surveyFileName = "surveyData.txt";
     String userName = null;
+    String time = null;
     Handler handler = new Handler();
 
     @Override
@@ -35,9 +36,11 @@ public class FTPActivity extends Activity{
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         String playerName = MainActivity.Companion.getUserName();
+        String timeline = MainActivity.Companion.getLight();
 
         System.out.println("playerName : "+playerName);
         userName = playerName;
+        time = timeline;
 
         NThread nThread = new NThread();
         nThread.start();
@@ -76,7 +79,7 @@ public class FTPActivity extends Activity{
         }
         public void upload() throws FTPIllegalReplyException, IOException, FTPException {
             String files[] = {accFileName,gyroFileName,lightFileName,surveyFileName};
-            String dirName = userName+"_"+(MainActivity.Companion.getTrial());
+            String dirName = (MainActivity.Companion.getUserName())+"_"+(MainActivity.Companion.getLight())+"_"+(MainActivity.Companion.getTrial());
 
             FTPClient client = new FTPClient();
             client.connect(FTP_HOST,FTP_PORT);

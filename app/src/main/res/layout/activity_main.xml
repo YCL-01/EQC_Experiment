@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <TextView
         android:id="@+id/Sex"
         android:layout_width="wrap_content"
@@ -16,30 +17,38 @@
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/radioGroup"
-        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.614" />
+        app:layout_constraintVertical_bias="0.552" />
+
+    <TextView
+        android:id="@+id/btnTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time"
+        android:textAlignment="center"
+        android:textSize="24sp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.726" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="263dp"
-        android:layout_height="57dp"
+        android:layout_width="273dp"
+        android:layout_height="84dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.375"
         app:layout_constraintStart_toEndOf="@+id/Sex"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.664">
-
-        <RadioButton
-            android:id="@+id/maleButton"
-            android:layout_width="132dp"
-            android:layout_height="87dp"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/Male" />
+        app:layout_constraintVertical_bias="0.615">
 
         <RadioButton
             android:id="@+id/femalebutton"
@@ -48,6 +57,39 @@
             android:onClick="onRadioButtonClicked"
             android:text="@string/Female" />
 
+        <RadioButton
+            android:id="@+id/maleButton"
+            android:layout_width="132dp"
+            android:layout_height="87dp"
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/Male" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="273dp"
+        android:layout_height="84dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.744">
+
+        <RadioButton
+            android:id="@+id/btnDay"
+            android:layout_width="132dp"
+            android:layout_height="87dp"
+            android:onClick="onRadioButtonClicked"
+            android:text="Day" />
+
+        <RadioButton
+            android:id="@+id/btnNight"
+            android:layout_width="132dp"
+            android:layout_height="87dp"
+            android:onClick="onRadioButtonClicked"
+            android:text="Night" />
     </RadioGroup>
 
     <EditText
@@ -86,10 +128,10 @@
         android:layout_marginTop="104dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.851"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.448" />
+        app:layout_constraintVertical_bias="0.408" />
 
     <TextView
         android:id="@+id/Age"
@@ -104,7 +146,7 @@
         app:layout_constraintHorizontal_bias="0.093"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.446" />
+        app:layout_constraintVertical_bias="0.394" />
 
     <TextView
         android:id="@+id/textView"
@@ -143,7 +185,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.951" />
+        app:layout_constraintVertical_bias="0.972" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
