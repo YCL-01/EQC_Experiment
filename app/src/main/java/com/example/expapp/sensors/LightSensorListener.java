@@ -56,9 +56,11 @@ public class LightSensorListener implements SensorEventListener {
 
                 float[] sensorValues = (sensorEvent.values);
                 String[] data=new String[sensorValues.length+1];
-                SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z");
-                jdf.setTimeZone(TimeZone.getTimeZone("GMT+9"));
-                data[0] = jdf.format(new Date(System.currentTimeMillis()));
+                //SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z");
+                //jdf.setTimeZone(TimeZone.getTimeZone("GMT+9"));
+                //data[0] = jdf.format(new Date(System.currentTimeMillis()));
+                long timestamp = System.currentTimeMillis()/1000L;
+                data[0] = String.valueOf(timestamp);
                 for(int i=0;i<sensorValues.length;i++)
                 {
                     data[i+1]=String.valueOf(sensorValues[i]);

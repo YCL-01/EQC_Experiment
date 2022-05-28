@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.*
 import java.io.FileOutputStream
 import android.util.DisplayMetrics
+import com.example.expapp.MainActivity.Companion.light
 
 class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     RatingBar.OnRatingBarChangeListener {
@@ -54,7 +55,7 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         var height = displayMetrics.heightPixels
 
         var fileName: String = "surveyData.txt"
-        var dataToWrite: String = "Age: $age\nSex: $sex\nRating: $score\nResolution: $resVal\nVideo: $vidType\nDisplaySize: $width x $height"
+        var dataToWrite: String = "Age: $age\nSex: $sex\nRating: $score\nResolution: $resVal\nVideo: $vidType\nDisplaySize: $width x $height\nTime: $time"
         var outputFile : FileOutputStream = openFileOutput(fileName, MODE_PRIVATE)
         outputFile.write(dataToWrite.toByteArray())	//memo : String DATA
         outputFile.close()

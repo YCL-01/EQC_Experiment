@@ -120,9 +120,13 @@ class PlayerActivity : AppCompatActivity(){
     override fun onStart() {
         super.onStart()
         hasStartedWriting = true
-        sensorManager!!.registerListener(accelerometerListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-        sensorManager!!.registerListener(gyroscopeListener,gyroscope,SensorManager.SENSOR_DELAY_NORMAL)
-        sensorManager!!.registerListener(lightSensorListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        val READRATE : Int = 100000
+        //sensorManager!!.registerListener(accelerometerListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+        //sensorManager!!.registerListener(gyroscopeListener,gyroscope,SensorManager.SENSOR_DELAY_NORMAL)
+        //sensorManager!!.registerListener(lightSensorListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager!!.registerListener(accelerometerListener, accelerometer, READRATE)
+        sensorManager!!.registerListener(gyroscopeListener,gyroscope,READRATE)
+        sensorManager!!.registerListener(lightSensorListener, lightSensor, READRATE)
         initPlayer()
         val eventListener : Player.Listener
         eventListener = object: Player.Listener {
