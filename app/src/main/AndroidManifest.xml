@@ -18,7 +18,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name=".FTPActivity"
+            android:name=".SFTPActivity"
             android:exported="false" />
         <activity
             android:name=".SubActivity"

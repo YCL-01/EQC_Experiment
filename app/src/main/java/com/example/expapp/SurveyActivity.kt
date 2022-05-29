@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.*
 import java.io.FileOutputStream
 import android.util.DisplayMetrics
-import com.example.expapp.MainActivity.Companion.light
 
 class SurveyActivity : AppCompatActivity(), View.OnClickListener,
     RatingBar.OnRatingBarChangeListener {
@@ -60,7 +59,7 @@ class SurveyActivity : AppCompatActivity(), View.OnClickListener,
         outputFile.write(dataToWrite.toByteArray())	//memo : String DATA
         outputFile.close()
 
-        val nextIntent = Intent(this, FTPActivity::class.java)
+        val nextIntent = Intent(this, SFTPActivity::class.java)
         nextIntent.putExtra("name", userName)
         nextIntent.putExtra("trial", userName)
         nextIntent.putExtra("time", time)
