@@ -227,33 +227,6 @@ class PlayerActivity : AppCompatActivity(){
         }
         return paramList
     }
-    /* Has Done
-     * sendGet 함수 작성 완료
-     * TODO
-     * 영상 아무거나 대충 40개 경로 맞춰서 넣고 테스트 해야함
-     */
-    /*
-    private fun sendPost(userName: String): Int {
-        val client = OkHttpClient()
-        val url = URL("http://101.250.30.99:5000/count")
-        val postBody = userName.trimMargin()
-        val request = Request.Builder()
-            .url(url)
-            .get()
-            .build()
-        var tmpVidNum = 0
-        val response = client.newCall(request).enqueue( object: Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                println("Error")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                tmpVidNum = (response?.body?.string()?.toInt() ?: Int) as Int
-            }
-
-        })
-        return tmpVidNum
-    }*/
 
     private fun getUrl(trial: Int): Triple<String, String, Int> {
         var vidPathUrl = "http://101.250.30.99:5000/video/"
