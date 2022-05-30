@@ -121,9 +121,6 @@ class PlayerActivity : AppCompatActivity(){
         super.onStart()
         hasStartedWriting = true
         val READRATE : Int = 20000
-        //sensorManager!!.registerListener(accelerometerListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-        //sensorManager!!.registerListener(gyroscopeListener,gyroscope,SensorManager.SENSOR_DELAY_NORMAL)
-        //sensorManager!!.registerListener(lightSensorListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
         sensorManager!!.registerListener(accelerometerListener, accelerometer, READRATE)
         sensorManager!!.registerListener(gyroscopeListener,gyroscope,READRATE)
         sensorManager!!.registerListener(lightSensorListener, lightSensor, READRATE)
