@@ -52,9 +52,14 @@ public class SFTPActivity extends Activity {
         userName = playerName;
         time = timeline;
 
-        new Thread(()->{
-            uploadFile();
-        }).start();
+        Thread uploading = new Thread(this::uploadFile);
+        uploading.start();
+
+        try {
+            uploading.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         if (MainActivity.Companion.getTrial() >= MainActivity.Companion.getTotal()) {
             moveTaskToBack(true);
@@ -65,11 +70,9 @@ public class SFTPActivity extends Activity {
         intent = new Intent(this, SubActivity.class);
         intent.putExtra("userName", playerName);
         startActivity(intent);
-        finish();
     }
 
     public void uploadFile() {
-        String files[] = {accFileName, gyroFileName, lightFileName, surveyFileName};
         String dirName = (MainActivity.Companion.getUserName()) + "_" + (MainActivity.Companion.getLight()) + "_" + (MainActivity.Companion.getTrial());
         String privateKey = "-----BEGIN RSA PRIVATE KEY-----\n" +
                 "Proc-Type: 4,ENCRYPTED\n" +
@@ -133,6 +136,7 @@ public class SFTPActivity extends Activity {
         FileInputStream in = null;
         String fileName = "";
         boolean result = true;
+        String files[] = {accFileName, gyroFileName, lightFileName, surveyFileName};
 
         try {
             channelSftp.cd("ftp");
