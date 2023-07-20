@@ -22,9 +22,9 @@ import com.jcraft.jsch.SftpException;
 
 public class SFTPActivity extends Activity {
 
-    static final String HOST = "34.64.87.233";
-    static final String USER = "youngchanlim95";
-    static final String PASS = "dla159*";
+    static final String HOST = "";
+    static final String USER = "";
+    static final String PASS = "*";
     static final int PORT = 22;
 
     private Session session = null;
