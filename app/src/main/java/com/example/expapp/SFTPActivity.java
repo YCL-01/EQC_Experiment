@@ -74,43 +74,8 @@ public class SFTPActivity extends Activity {
 
     public void uploadFile() {
         String dirName = (MainActivity.Companion.getUserName()) + "_" + (MainActivity.Companion.getLight()) + "_" + (MainActivity.Companion.getTrial());
-        String privateKey = "-----BEGIN RSA PRIVATE KEY-----\n" +
-                "Proc-Type: 4,ENCRYPTED\n" +
-                "DEK-Info: DES-EDE3-CBC,9A3639918F48AFF8\n" +
-                "\n" +
-                "ucweG9othtnzGlilwsO2WImSi7O5INNe8ZjHMpJFdlie4ZFqTpLxdDWByKYTQ39d\n" +
-                "nlfOJaYFg4vq3dZYda4htijAenux3Yp/47lRpMjfoG4PgCSO/dLAgl9Rl9OUkWAR\n" +
-                "QvE39JopgPksWhWN99pfVncm9+nUWU4D14rLik4gqQeSf4zr9LwaBe4f3KpJMg9o\n" +
-                "KKRlysHfgWvYM1qMI3p0pi4cqfz8AAu7w7TT/MWbX6KeTGpWcMSiTdZFJcYwExfz\n" +
-                "4Fbj3edcehSts4Aq4k7GJ+xVLLrwsQ4shyeO0iWvGL3mcQXCnaVdGz+wcpT9zNVC\n" +
-                "5y87ivUufgBG5iAdJCQTJDpIQ0NA+Lym/H8H/oZ4u/yHXcSPtruFcSFEO39dt8al\n" +
-                "UdAc+dBMtL7n8I00ISXO/oF7xCiTFzUWaoLMFjBMuKW9k0GEu7Xt6LOkbNJl0nKZ\n" +
-                "kSH5QoHJq7k5ufQvAF8bJDBZCOrCeBy3SEbIODIZt6fClYY3R00Ac5U+YSw4Vfv9\n" +
-                "GxN4HMJbNtfI+i9M4xwiRsSIvVwi7Lnklx8d4eWd3D39iZn28j9HYFtw1pZZe934\n" +
-                "wH0cCQALyQEN7/jh+oDxLMhyOYkf+beLNt2kaRYLYF/2SK3WkQPS3rOhy33CI+zU\n" +
-                "nIk40ZfOXsDV1CMR9WyEUWkdfxxhBaSe9PFenFZlYTokTCMOqG7Br0RTdPD6O1mp\n" +
-                "BCCmNGcpC57XGeF/HO6Pql2CuTe60MF2k4QVr6UAq4mszTpSimZ14Id0DH/lMOUI\n" +
-                "r5CSkY1w4XIlClPeHHsaxRa0df91R6nVXgpPiRcQZCirP+JmGkatChy0+nHehBN0\n" +
-                "y0Bv/kjbODrnkRyMIto1/8ihO74MpYm7BmJi66jeSFS8FHip6hYwrb0J3eEHYsa1\n" +
-                "/THSFR/SxfhwDeC68CYHcuQp8RLiwg5arfpWsbtiCnKKS1l8sJWwF58iCpywe+qd\n" +
-                "xBySERByC8m4aQlyxjf0BY9Jba54k97OO+PTWFcvhZi/uCStorjYymhtybH1motM\n" +
-                "9imB3pBovsMdR06tk2jGsICO2wcOaHsHomdedwn2GTPPS53r3yLSDuZK0pl/gnzH\n" +
-                "dxBT9OA2PbL3PnQhgtiYNDIn3E0GPTngvJlR1VGYDCSMcaQ4mZ+tvJ6EeRlBznzu\n" +
-                "DTviKLwKZt+IebHy7q5quWfo9x7Cj6zA4xykM8fDdRy6BhqQQHxUQ4zH/XWLlHNh\n" +
-                "S1xGXp7mig+xz70onbzZMSS6NgEMXyfpaTPpwnlidypHJ13bN+1mBwMx1yGuoTPc\n" +
-                "OaqHoOiE0mcLgPYkGzjUg0W9WSQ6OhBTMwTzFNtIIa3oGtiViwVdJxPHPDq6tZOb\n" +
-                "UIAj7KSVmb/EtnQVirOFFQ18byyo+4DtCOAYrZ+Pk7U/3DJrRFQajJtCfxR+suR6\n" +
-                "EyawLEunUNeSJ3MHWghqwtMu65M1UjjaxeFVwcytVdHrSNGcg+X0wSwC3xU26A47\n" +
-                "4UkGXRlAM2yEnqO+dpznbEDU2g11ZWTqMCgKvnZLHma6tbaEH15+QN/kbYfW2TV1\n" +
-                "J411T+N0CdBM/1F5mWGiJIymxSSgUufvu68Wz4yzes3d7sMfO27xHw==\n" +
-                "-----END RSA PRIVATE KEY-----";
-        String publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDy9G7WCnZkX3hej" +
-                "F/FPHwKFNII6qlVRb4pGuT/v+Na8DNBYEKgX6D6MAsVxha5rsJA/KNt8edB7bKda" +
-                "NdaXJ7WZKHW23iXPaSoj4sihSERH7cOjUSvKrAt1jSZTO8y9U9W1mjih9/RcOau6" +
-                "DlVgN590TdFFoRrpeZevzuWnKkxglg/oX/f6yMwMS08ERK7bHmsZeRBiBI9mBBEo" +
-                "Ky7xdH2m8+jpesRsDJbHsjgs+LHmcJOqb6FcknjhUMtFJtdQmhA2LXG+hPgwbpt3" +
-                "A0+TaT1BUopOnz+hz5s0wx6FlloVL4K/qEA0J2owBgSzlHUIbSngKn+7gQw2AmSP" +
-                "pTrXMFp youngchanlim95";
+        String privateKey = "";
+        String publicKey = "";
 
         JSch jsch = new JSch();
         try {
